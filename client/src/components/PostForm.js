@@ -1,8 +1,9 @@
 import React from 'react'
 import { Button, Form } from 'semantic-ui-react'
-import { useForm } from '../util/hooks'
-import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
+import { useMutation } from '@apollo/react-hooks'
+
+import { useForm } from '../util/hooks'
 import { FETCH_POSTS_QUERY } from '../util/graphql'
 
 function PostForm() {
@@ -16,8 +17,13 @@ function PostForm() {
       const data = proxy.readQuery({
         query: FETCH_POSTS_QUERY,
       })
-      data.getPosts = [result.data.createPost, ...data.getPosts]
-      proxy.writeQuery({ query: FETCH_POSTS_QUERY, data })
+      proxy.writeQuery({
+        query: FETCH_POSTS_QUERY,
+        data: {
+          getPosts: [result.data.createPost, ...data.getPosts],
+        },
+      })
+
       values.body = ''
     },
   })
@@ -27,7 +33,7 @@ function PostForm() {
   }
 
   return (
-    <div>
+    <>
       <Form onSubmit={onSubmit}>
         <h2>Create a post:</h2>
         <Form.Field>
@@ -50,7 +56,7 @@ function PostForm() {
           </ul>
         </div>
       )}
-    </div>
+    </>
   )
 }
 

@@ -7,11 +7,11 @@ import { FETCH_POSTS_QUERY } from '../util/graphql'
 import PostCard from '../components/PostCard'
 import PostForm from '../components/PostForm'
 function Home() {
+  const { user } = useContext(AuthContext)
   const { loading, data: { getPosts: posts } = {} } =
     useQuery(FETCH_POSTS_QUERY)
 
-  const { user } = useContext(AuthContext)
-
+  console.log(posts)
   return (
     <Grid columns={3}>
       <Grid.Row className='page-title'>
