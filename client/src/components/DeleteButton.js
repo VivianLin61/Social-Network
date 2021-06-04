@@ -2,46 +2,50 @@ import React, { useState } from 'react'
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
 import { Button, Confirm, Icon } from 'semantic-ui-react'
-
+import MyPopup from '../util/MyPopup'
 import { FETCH_POSTS_QUERY } from '../util/graphql'
 
-function DeleteButton({ postId, callback }) {
+function DeleteButton({ postId, commentId, callback }) {
   const [confirmOpen, setConfirmOpen] = useState(false)
 
-  const mutation = DELETE_POST_MUTATION
+  const mutation = commentId ? DELETE_COMMENT_MUTATION : DELETE_POST_MUTATION
 
-  const [deletePostOrMutation] = useMutation(DELETE_POST_MUTATION, {
+  const [deletePostOrMutation] = useMutation(mutation, {
     update(proxy) {
       setConfirmOpen(false)
+      if (!commentId) {
+        const data = proxy.readQuery({
+          query: FETCH_POSTS_QUERY,
+        })
+        proxy.writeQuery({
+          query: FETCH_POSTS_QUERY,
+          data: {
+            getPosts: data.getPosts.filter((p) => p.id !== postId),
+          },
+        })
 
-      const data = proxy.readQuery({
-        query: FETCH_POSTS_QUERY,
-      })
-      proxy.writeQuery({
-        query: FETCH_POSTS_QUERY,
-        data: {
-          getPosts: data.getPosts.filter((p) => p.id !== postId),
-        },
-      })
-
-      if (callback) {
-        callback()
+        if (callback) {
+          callback()
+        }
       }
     },
     variables: {
       postId,
+      commentId,
     },
   })
   return (
     <>
-      <Button
-        as='div'
-        color='red'
-        floated='right'
-        onClick={() => setConfirmOpen(true)}
-      >
-        <Icon name='trash' style={{ margin: 0 }} />
-      </Button>
+      <MyPopup content={commentId ? 'Delete comment' : 'Delete post'}>
+        <Button
+          as='div'
+          color='red'
+          floated='right'
+          onClick={() => setConfirmOpen(true)}
+        >
+          <Icon name='trash' style={{ margin: 0 }} />
+        </Button>
+      </MyPopup>
 
       <Confirm
         open={confirmOpen}
