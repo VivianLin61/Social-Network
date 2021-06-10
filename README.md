@@ -1,7 +1,5 @@
 # Social-Network
 
-# Social Network
-
 ## Description
 
 A twitter like social media website where users and create and comment on posts. This web application is built using the MERN stack with GraphQL.
@@ -16,7 +14,7 @@ A twitter like social media website where users and create and comment on posts.
 
 1. Clone the project
 
-```git clone https://github.com/VivianLin61/MERN-Ecommerce-Project.git```
+```https://github.com/VivianLin61/Social-Network.git```
 
 2. Start up back end server
   ```npm install```
