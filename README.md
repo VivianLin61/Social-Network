@@ -13,7 +13,9 @@ A twitter like social media website where users and create and comment on posts.
 ## Installation
 
 1. Clone the project
-```git clone https://github.com/VivianLin61/Social-Network.git```
+```
+git clone https://github.com/VivianLin61/Social-Network.git
+```
 
 2. Start up back end server
 - ```npm install```
