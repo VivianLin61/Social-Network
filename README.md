@@ -17,16 +17,14 @@ A twitter like social media website where users and create and comment on posts.
 ```https://github.com/VivianLin61/Social-Network.git```
 
 2. Start up back end server
-  ```npm install```
-
+- ```npm install```
 - Create an ```.env``` file than includes ```MONGO_URI, JWT_SECRET && PORT```
 - Run back-end server
-
 ```
 npm start
 ```
 
-3. Start up application
+3. Start up client application
 ```cd client
 npm install
 npm start
