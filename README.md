@@ -16,14 +16,12 @@ A twitter like social media website where users and create and comment on posts.
 
 1. Clone the project
 
-```git clone https://github.com/VivianLin61/MERN-Ecommerce-Project.git
-
-```
+```git clone https://github.com/VivianLin61/MERN-Ecommerce-Project.git```
 
 2. Start up back end server
-   `npm install`
+  ```npm install```
 
-- Create an `.env` file than includes `MONGO_URI, JWT_SECRET && PORT`
+- Create an ```.env``` file than includes ```MONGO_URI, JWT_SECRET && PORT```
 - Run back-end server
 
 ```
