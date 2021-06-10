@@ -10,6 +10,10 @@ A twitter like social media website where users and create and comment on posts.
 2. Users can like and comment on other people's posts.
 3. Users can create and delete their own posts.
 
+## Project Demo
+![bcFpxi7kVI](https://user-images.githubusercontent.com/33815743/121560792-d8631d00-c9e5-11eb-9b29-886ad5b5df7e.gif)
+
+
 ## Installation
 
 1. Clone the project
