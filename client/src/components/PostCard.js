@@ -7,6 +7,8 @@ import LikeButton from './LikeButton.js'
 import DeleteButton from './DeleteButton.js'
 import MyPopup from '../util/MyPopup'
 import { Row, Col } from 'react-bootstrap'
+import { BiCommentDots } from 'react-icons/bi'
+import { FcLikePlaceholder } from 'react-icons/fc'
 function PostCard({
   post: { body, createdAt, id, username, likeCount, commentCount, likes },
 }) {
@@ -24,7 +26,7 @@ function PostCard({
           </Col>
           <Col xs={10}>
             <Row xs={2} className='justify-content-md-center postBody'>
-              <Col className='h-20' xs={12}>
+              <Col xs={12}>
                 <Row>
                   <div>
                     <span>{username}</span>
@@ -32,12 +34,21 @@ function PostCard({
                   </div>
                 </Row>
               </Col>
-              <Col className='h-70' xs={12}>
-                sdfgsdfhsdfhgskhdsfgsdlkfgjsdlgjflskjgfdlsjgjflsfgkshgfklsdhg
+              <Col style={{ height: '70px' }} xs={12}>
+                Lorem Ipsum is simply dummy text of the printing and typesetting
+                industry. Lorem Ipsum has been the industry's standard
               </Col>
-              <Col className='h-10' xs={12}>
-                Comments
+              <Col className='align-text-bottom' xs={12}>
+                <BiCommentDots
+                  style={{ fontSize: '22px', paddingTop: '3px' }}
+                />
+                <span className='commentAndLikeCount'>{commentCount}</span>
+                <FcLikePlaceholder
+                  style={{ paddingTop: '2px', fontSize: '20px' }}
+                />
+                <span className='commentAndLikeCount'>{likeCount}</span>
               </Col>
+              
             </Row>
           </Col>
         </Row>

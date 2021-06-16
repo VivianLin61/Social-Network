@@ -61,3 +61,38 @@
   background-color: white;
   padding-left: 10px;
 }
+
+.commentAndLikeCount {
+  padding-left: 10px;
+  color: gray;
+  margin-top: 10px;
+}
+
+.createPostFormModal {
+  height: 300px;
+  font-size: 25px;
+}
+
+@media (min-width: 992px) {
+  .modal-lg,
+  .modal-xl {
+    max-width: 700px;
+  }
+}
+
+.postButton {
+  width: 100%;
+  height: 50px;
+  border-radius: 15px;
+  font-size: 20px;
+  font-weight: bold;
+  background-color: #78bee5;
+  border-color: #78bee5;
+}
+
+.closeCreateFormModal {
+  background: none;
+  font-size: 40px;
+  border: none;
+  margin-top: -5px;
+}

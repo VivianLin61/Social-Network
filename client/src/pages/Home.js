@@ -7,13 +7,14 @@ import { FETCH_POSTS_QUERY } from '../util/graphql'
 import PostCard from '../components/PostCard'
 import PostForm from '../components/PostForm'
 import { Row, Col, InputGroup, FormControl } from 'react-bootstrap'
+import CreatePostModal from '../components/Modals/CreatePostModal.js'
 function Home() {
   const { user } = useContext(AuthContext)
   const { loading, data: { getPosts: posts } = {} } =
     useQuery(FETCH_POSTS_QUERY)
   //If user show post form where user can post something
   //Loads all the posts.
-  console.log(posts)
+  const [modalShow, setModalShow] = React.useState(false)
   return (
     <>
       {user && (
@@ -44,6 +45,7 @@ function Home() {
                           placeholder={`What's on your mind, ${user.username}?`}
                           aria-label='createPostForm'
                           aria-describedby='basic-addon1'
+                          onClick={() => setModalShow(true)}
                         />
                       </InputGroup>
                     </Col>
@@ -68,6 +70,12 @@ function Home() {
           </>
         </div>
       )}
+
+      <CreatePostModal
+        username={user ? user.username : undefined}
+        show={modalShow}
+        onHide={() => setModalShow(false)}
+      />
     </>
   )
 }
