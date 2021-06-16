@@ -2,7 +2,7 @@ import React, { useContext } from 'react'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 import { AuthContext } from '../context/auth'
-// import LikeButton from './LikeButton.js'
+import LikeButton from './LikeButton.js'
 // import DeleteButton from './DeleteButton.js'
 // import MyPopup from '../util/MyPopup'
 import { Row, Col } from 'react-bootstrap'
@@ -37,14 +37,16 @@ function PostCard({
                 {body}
               </Col>
               <Col className='align-text-bottom' xs={12}>
-                <BiCommentDots
-                  style={{ fontSize: '22px', paddingTop: '3px' }}
-                />
+                <Link to={`/posts/${id}`}>
+                  <BiCommentDots style={{ fontSize: '22px' }} />
+                </Link>
                 <span className='commentAndLikeCount'>{commentCount}</span>
-                <FcLikePlaceholder
+                <LikeButton user={user} post={{ id, likes, likeCount }} />
+                {/* <FcLikePlaceholder
                   style={{ paddingTop: '2px', fontSize: '20px' }}
                 />
-                <span className='commentAndLikeCount'>{likeCount}</span>
+
+                <span className='commentAndLikeCount'>{likeCount}</span> */}
               </Col>
             </Row>
           </Col>

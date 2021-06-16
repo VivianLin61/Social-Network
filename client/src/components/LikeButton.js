@@ -4,6 +4,8 @@ import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { Button, Label, Icon } from 'semantic-ui-react'
 import MyPopup from '../util/MyPopup'
+import { FcLikePlaceholder, FcLike } from 'react-icons/fc'
+import { AiOutlineLike } from 'react-icons/ai'
 function LikeButton({ user, post: { id, likeCount, likes } }) {
   const [liked, setLiked] = useState(false)
 
@@ -19,27 +21,30 @@ function LikeButton({ user, post: { id, likeCount, likes } }) {
 
   const likeButton = user ? (
     liked ? (
-      <Button color='teal' onClick={likePost}>
-        <Icon name='heart' />
-      </Button>
+      <button className='likeButton'>
+        <FcLike onClick={likePost} style={{ fontSize: '20px' }} />
+      </button>
     ) : (
-      <Button color='teal' basic onClick={likePost}>
-        <Icon name='heart' />
-      </Button>
+      <button className='likeButton'>
+        <FcLikePlaceholder
+          onClick={likePost}
+          style={{ pointerEvents: 'auto', fontSize: '20px' }}
+        />
+      </button>
     )
   ) : (
-    <Button as={Link} to='/login' color='teal' basic>
-      <Icon name='heart' />
-    </Button>
+    <FcLikePlaceholder
+      // as={Link}
+      className='likeButton'
+      // to='/login'
+      style={{ fontSize: '20px' }}
+    />
   )
 
   return (
-    <Button as='div' labelPosition='right'>
-      <MyPopup content={liked ? 'Unlike' : 'Like'}>{likeButton}</MyPopup>
-      <Label basic color='teal' pointing='left'>
-        {likeCount}
-      </Label>
-    </Button>
+    <>
+      {likeButton} <span className='commentAndLikeCount'>{likeCount}</span>
+    </>
   )
 }
 

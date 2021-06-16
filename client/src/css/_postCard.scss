@@ -66,6 +66,7 @@
   padding-left: 10px;
   color: gray;
   margin-top: 10px;
+  vertical-align: middle;
 }
 
 .createPostFormModal {
@@ -95,4 +96,9 @@
   font-size: 40px;
   border: none;
   margin-top: -5px;
+}
+
+.likeButton {
+  background: none;
+  border: none;
 }
