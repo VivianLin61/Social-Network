@@ -1,11 +1,10 @@
 import React, { useContext } from 'react'
-import { Button, Card, Icon, Label, Image } from 'semantic-ui-react'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
 import { AuthContext } from '../context/auth'
-import LikeButton from './LikeButton.js'
-import DeleteButton from './DeleteButton.js'
-import MyPopup from '../util/MyPopup'
+// import LikeButton from './LikeButton.js'
+// import DeleteButton from './DeleteButton.js'
+// import MyPopup from '../util/MyPopup'
 import { Row, Col } from 'react-bootstrap'
 import { BiCommentDots } from 'react-icons/bi'
 import { FcLikePlaceholder } from 'react-icons/fc'
@@ -35,8 +34,7 @@ function PostCard({
                 </Row>
               </Col>
               <Col style={{ height: '70px' }} xs={12}>
-                Lorem Ipsum is simply dummy text of the printing and typesetting
-                industry. Lorem Ipsum has been the industry's standard
+                {body}
               </Col>
               <Col className='align-text-bottom' xs={12}>
                 <BiCommentDots
@@ -48,7 +46,6 @@ function PostCard({
                 />
                 <span className='commentAndLikeCount'>{likeCount}</span>
               </Col>
-              
             </Row>
           </Col>
         </Row>

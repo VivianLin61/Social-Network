@@ -2,10 +2,8 @@ import React, { useContext } from 'react'
 import { useQuery } from '@apollo/react-hooks'
 import gql from 'graphql'
 import { AuthContext } from '../context/auth'
-import { Grid, Transition } from 'semantic-ui-react'
 import { FETCH_POSTS_QUERY } from '../util/graphql'
 import PostCard from '../components/PostCard'
-import PostForm from '../components/PostForm'
 import { Row, Col, InputGroup, FormControl } from 'react-bootstrap'
 import CreatePostModal from '../components/Modals/CreatePostModal.js'
 function Home() {
@@ -62,11 +60,7 @@ function Home() {
         <div className='postsList'>
           <>
             {posts &&
-              posts.map((post, index) => (
-                <>
-                  <PostCard key={index} post={post} />
-                </>
-              ))}
+              posts.map((post, index) => <PostCard key={index} post={post} />)}
           </>
         </div>
       )}

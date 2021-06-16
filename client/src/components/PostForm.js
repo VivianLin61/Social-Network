@@ -44,9 +44,15 @@ function PostForm() {
             value={values.body}
             error={error ? true : false}
           />
-          <Button type='submit' color='teal'>
-            Submit
-          </Button>
+          {values.body !== '' ? (
+            <Button type='submit' color='teal'>
+              Cannot Submit
+            </Button>
+          ) : (
+            <Button type='submit' color='teal'>
+              Submit
+            </Button>
+          )}
         </Form.Field>
       </Form>
       {error && (
