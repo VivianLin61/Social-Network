@@ -6,36 +6,69 @@ import { Grid, Transition } from 'semantic-ui-react'
 import { FETCH_POSTS_QUERY } from '../util/graphql'
 import PostCard from '../components/PostCard'
 import PostForm from '../components/PostForm'
+import { Row, Col, InputGroup, FormControl } from 'react-bootstrap'
 function Home() {
   const { user } = useContext(AuthContext)
   const { loading, data: { getPosts: posts } = {} } =
     useQuery(FETCH_POSTS_QUERY)
-
+  //If user show post form where user can post something
+  //Loads all the posts.
+  console.log(posts)
   return (
-    <Grid columns={3}>
-      <Grid.Row className='page-title'>
-        <h1>Recent Posts</h1>
-      </Grid.Row>
-      <Grid.Row>
-        {user && (
-          <Grid.Column>
-            <PostForm />
-          </Grid.Column>
-        )}
-        {loading ? (
-          <h1>Loading posts..</h1>
-        ) : (
-          <Transition.Group>
+    <>
+      {user && (
+        <div className='postsList'>
+          <div className='postCardContainer'>
+            <Col xs={12}>
+              <Row xs={2} className='justify-content-md-center createPostBody'>
+                <Col className='h-20' xs={12}>
+                  <div>Post Something</div>
+                  <hr />
+                </Col>
+                <Col className='h-80' xs={12}>
+                  <Row>
+                    <Col xs={1}>
+                      <img
+                        style={{
+                          marginLeft: '5px',
+                          marginTop: '0px',
+                          width: '50px',
+                        }}
+                        src='https://react.semantic-ui.com/images/avatar/large/molly.png'
+                        alt=''
+                      />
+                    </Col>
+                    <Col xs={11}>
+                      <InputGroup className='mb-3 createPostForm'>
+                        <FormControl
+                          placeholder={`What's on your mind, ${user.username}?`}
+                          aria-label='createPostForm'
+                          aria-describedby='basic-addon1'
+                        />
+                      </InputGroup>
+                    </Col>
+                  </Row>
+                </Col>
+              </Row>
+            </Col>
+          </div>
+        </div>
+      )}
+      {loading ? (
+        <h1>Loading posts..</h1>
+      ) : (
+        <div className='postsList'>
+          <>
             {posts &&
-              posts.map((post) => (
-                <Grid.Column key={post.id} style={{ marginBottom: 20 }}>
-                  <PostCard post={post} />
-                </Grid.Column>
+              posts.map((post, index) => (
+                <>
+                  <PostCard key={index} post={post} />
+                </>
               ))}
-          </Transition.Group>
-        )}
-      </Grid.Row>
-    </Grid>
+          </>
+        </div>
+      )}
+    </>
   )
 }
 

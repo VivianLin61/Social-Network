@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react'
-import { Button, Form } from 'semantic-ui-react'
+import { Form, Button } from 'react-bootstrap'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 
@@ -34,45 +34,55 @@ function Register(props) {
 
   return (
     <div className='form-container'>
-      <Form onSubmit={onSubmit} noValidate className={loading ? 'loading' : ''}>
-        <h1>Register</h1>
-        <Form.Input
-          label='Username'
-          placeholder='Username..'
-          name='username'
-          type='text'
-          value={values.username}
-          error={errors.username ? true : false}
-          onChange={onChange}
-        />
-        <Form.Input
-          label='Email'
-          placeholder='Email..'
-          name='email'
-          type='email'
-          value={values.email}
-          error={errors.email ? true : false}
-          onChange={onChange}
-        />
-        <Form.Input
-          label='Password'
-          placeholder='Password..'
-          name='password'
-          type='password'
-          value={values.password}
-          error={errors.password ? true : false}
-          onChange={onChange}
-        />
-        <Form.Input
-          label='Confirm Password'
-          placeholder='Confirm Password..'
-          name='confirmPassword'
-          type='password'
-          value={values.confirmPassword}
-          error={errors.confirmPassword ? true : false}
-          onChange={onChange}
-        />
-        <Button type='submit' primary>
+      <Form onSubmit={onSubmit}>
+        <h1>Regsiter</h1>
+
+        <Form.Group>
+          <Form.Label>Username</Form.Label>
+          <Form.Control
+            type='username'
+            name='username'
+            placeholder='Enter Username'
+            value={values.username}
+            error={errors.username ? true : undefined}
+            onChange={onChange}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type='email'
+            name='email'
+            placeholder='Enter Email'
+            value={values.email}
+            error={errors.email ? true : undefined}
+            onChange={onChange}
+          />
+        </Form.Group>
+
+        <Form.Group>
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type='password'
+            name='password'
+            placeholder='Password'
+            value={values.password}
+            error={errors.password ? true : undefined}
+            onChange={onChange}
+          />
+        </Form.Group>
+        <Form.Group>
+          <Form.Label>Confirm Password</Form.Label>
+          <Form.Control
+            type='confirmPassword'
+            name='confirmPassword'
+            placeholder='Confirm Password'
+            value={values.confirmPassword}
+            error={errors.confirmPassword ? true : undefined}
+            onChange={onChange}
+          />
+        </Form.Group>
+        <Button className='formSubmit' variant='primary' type='submit'>
           Register
         </Button>
       </Form>

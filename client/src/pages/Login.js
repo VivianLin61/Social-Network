@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react'
-import { Button, Form } from 'semantic-ui-react'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 
-import { AuthContext } from '../context/auth'
+import { AuthContext } from '../context/auth.js'
 import { useForm } from '../util/hooks'
+import { Form, Button } from 'react-bootstrap'
 
 function Login(props) {
   const context = useContext(AuthContext)
@@ -16,6 +16,7 @@ function Login(props) {
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(_, { data: { login: userData } }) {
       context.login(userData)
+      // console.log(result.data.login)
       props.history.push('/')
     },
     onError(err) {
@@ -29,40 +30,48 @@ function Login(props) {
   }
 
   return (
-    <div className='form-container'>
-      <Form onSubmit={onSubmit} noValidate className={loading ? 'loading' : ''}>
-        <h1>Login User</h1>
-        <Form.Input
-          label='Username'
-          placeholder='Username..'
-          name='username'
-          type='text'
-          value={values.username}
-          error={errors.username ? true : false}
-          onChange={onChange}
-        />
-        <Form.Input
-          label='Password'
-          placeholder='Password..'
-          name='password'
-          type='password'
-          value={values.password}
-          error={errors.password ? true : false}
-          onChange={onChange}
-        />
-        <Button type='submit' primary>
-          Login
-        </Button>
-      </Form>
-      {Object.keys(errors).length > 0 && (
-        <div className='ui error message'>
-          <ul className='list'>
-            {Object.values(errors).map((value) => (
-              <li key={value}>{value}</li>
-            ))}
-          </ul>
-        </div>
-      )}
+    <div className='container'>
+      <div className='form-container'>
+        <Form onSubmit={onSubmit}>
+          <h1>Login</h1>
+          <Form.Group controlId='formBasicEmail'>
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type='email'
+              name='email'
+              placeholder='Enter email'
+              value={values.email}
+              error={errors.email ? true : undefined}
+              onChange={onChange}
+            />
+          </Form.Group>
+
+          <Form.Group controlId='formBasicPassword'>
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type='password'
+              name='password'
+              placeholder='Password'
+              value={values.password}
+              error={errors.password ? true : undefined}
+              onChange={onChange}
+            />
+          </Form.Group>
+          <Button className='formSubmit' variant='primary' type='submit'>
+            Login
+          </Button>
+        </Form>
+
+        {Object.keys(errors).length > 0 && (
+          <div className='ui error message'>
+            <ul className='list'>
+              {Object.values(errors).map((value) => (
+                <li key={value}>{value}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </div>
     </div>
   )
 }
@@ -70,8 +79,8 @@ function Login(props) {
 export default Login
 
 const LOGIN_USER = gql`
-  mutation login($username: String!, $password: String!) {
-    login(username: $username, password: $password) {
+  mutation login($email: String!, $password: String!) {
+    login(email: $email, password: $password) {
       id
       email
       username

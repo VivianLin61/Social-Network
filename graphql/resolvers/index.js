@@ -6,6 +6,9 @@ module.exports = {
     likeCount: (parent) => parent.likes.length,
     commentCount: (parent) => parent.comments.length,
   },
+  User: {
+    // fullName: (parent) => parent.firstName + parent.lastName,
+  },
   Query: {
     ...postsResolvers.Query,
   },

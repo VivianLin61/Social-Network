@@ -6,7 +6,7 @@ const {
   validateRegisterInput,
   validateLoginInput,
 } = require('../../util/validators')
-const { SECRET_KEY } = require('../../config')
+
 const User = require('../../models/User')
 
 function generateToken(user) {
@@ -16,21 +16,21 @@ function generateToken(user) {
       email: user.email,
       username: user.username,
     },
-    SECRET_KEY,
+    process.env.JWT_SECRET,
     { expiresIn: '1h' }
   )
 }
 
 module.exports = {
   Mutation: {
-    async login(_, { username, password }) {
-      const { errors, valid } = validateLoginInput(username, password)
+    async login(_, { email, password }) {
+      const { errors, valid } = validateLoginInput(email, password)
 
       if (!valid) {
         throw new UserInputError('Errors', { errors })
       }
 
-      const user = await User.findOne({ username })
+      const user = await User.findOne({ email })
 
       if (!user) {
         errors.general = 'User not found'

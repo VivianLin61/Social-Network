@@ -13,6 +13,8 @@ import Home from './pages/Home'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import SinglePost from './pages/SinglePost'
+import Profile from './pages/Profile'
+import 'bootstrap/dist/css/bootstrap.min.css'
 
 function App() {
   return (
@@ -23,6 +25,7 @@ function App() {
           <Route exact path='/' component={Home} />
           <AuthRoute exact path='/login' component={Login} />
           <AuthRoute exact path='/register' component={Register} />
+          <Route exact path='/profile/:userId' component={Profile} />
           <Route exact path='/posts/:postId' component={SinglePost} />
         </Container>
       </Router>

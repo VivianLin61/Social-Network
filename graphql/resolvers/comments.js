@@ -29,13 +29,11 @@ module.exports = {
     },
     async deleteComment(_, { postId, commentId }, context) {
       const { username } = checkAuth(context)
-      console.log(username)
+
       const post = await Post.findById(postId)
 
       if (post) {
         const commentIndex = post.comments.findIndex((c) => c.id === commentId)
-
-        console.log(post.comments[commentIndex])
 
         if (post.comments[commentIndex].username === username) {
           post.comments.splice(commentIndex, 1)

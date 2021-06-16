@@ -22,6 +22,7 @@ function MenuBar() {
         />
 
         <Menu.Menu position='right'>
+          <Menu.Item name='profile' as={Link} to={`/profile/${user.id}`} />
           <Menu.Item name='logout' onClick={logout} />
         </Menu.Menu>
       </Menu>
