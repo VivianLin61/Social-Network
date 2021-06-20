@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Menu } from 'semantic-ui-react'
+import { Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { AuthContext } from '../context/auth'
 function MenuBar() {
@@ -12,50 +13,49 @@ function MenuBar() {
   const handleItemClick = (e, { name }) => setActiveItem(name)
 
   const menuBar = user ? (
+    //show user name and logout
     <>
-      <Menu pointing secondary size='massive' color='teal'>
-        <Menu.Item
-          name={user.username}
-          onClick={handleItemClick}
-          as={Link}
-          to='/'
-        />
+      <Nav defaultActiveKey='/' as='ul' className='loggedInNavBar'>
+        <Nav.Item as='li'>
+          <Nav.Link href='/'>Social</Nav.Link>
+        </Nav.Item>
 
-        <Menu.Menu position='right'>
-          <Menu.Item name='profile' as={Link} to={`/profile/${user.id}`} />
-          <Menu.Item name='logout' onClick={logout} />
-        </Menu.Menu>
-      </Menu>
+        <div className='rightMenu'>
+          <Nav.Item onClick={handleItemClick} as='li'>
+            <Nav.Link href={`/profile/${user.id}`}>{user.username}</Nav.Link>
+          </Nav.Item>
+          <Nav.Item as='li' onClick={logout}>
+            <Nav.Link>Logout</Nav.Link>
+          </Nav.Item>
+        </div>
+      </Nav>
     </>
   ) : (
-    <>
-      <Menu pointing secondary size='massive' color='teal'>
-        <Menu.Item
-          name='home'
-          active={activeItem === 'home'}
-          onClick={handleItemClick}
-          as={Link}
-          to='/'
-        />
+    //login register
+    <Nav defaultActiveKey='/' as='ul' className='loggedInNavBar'>
+      <Nav.Item as='li'>
+        <Nav.Link href='/'>Social</Nav.Link>
+      </Nav.Item>
 
-        <Menu.Menu position='right'>
-          <Menu.Item
-            name='login'
-            active={activeItem === 'login'}
-            onClick={handleItemClick}
-            as={Link}
-            to='/login'
-          />
-          <Menu.Item
-            name='register'
-            active={activeItem === 'register'}
-            onClick={handleItemClick}
-            as={Link}
-            to='/register'
-          />
-        </Menu.Menu>
-      </Menu>{' '}
-    </>
+      <div className='rightMenu'>
+        <Nav.Item
+          name='login'
+          active={activeItem === 'login'}
+          onClick={handleItemClick}
+          as='li'
+        >
+          <Nav.Link href={`/login`}>Login</Nav.Link>
+        </Nav.Item>
+        <Nav.Item
+          as='li'
+          name='register'
+          active={activeItem == 'register'}
+          onClick={handleItemClick}
+        >
+          <Nav.Link to='/register'>Register</Nav.Link>
+        </Nav.Item>
+      </div>
+    </Nav>
   )
 
   return menuBar

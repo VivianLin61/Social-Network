@@ -1,0 +1,19 @@
+@mixin navBarStyles() {
+  font-weight: bold;
+  font-size: 25px;
+  display: flex;
+  padding-top: 10px;
+  justify-content: space-between;
+  padding-bottom: 15px;
+}
+
+.loggedInNavBar {
+  @include navBarStyles();
+}
+.loggedOutNavBar {
+  @include navBarStyles();
+}
+.rightMenu {
+  display: flex;
+  justify-content: space-between;
+}

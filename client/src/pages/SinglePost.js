@@ -7,7 +7,6 @@ import { BsThreeDots } from 'react-icons/bs'
 import { Row, Col, FormControl, InputGroup, Button } from 'react-bootstrap'
 import { AuthContext } from '../context/auth'
 import LikeButton from '../components/LikeButton'
-import DeleteButton from '../components/DeleteButton'
 
 function SinglePost(props) {
   const postId = props.match.params.postId

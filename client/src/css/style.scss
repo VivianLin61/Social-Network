@@ -1,6 +1,12 @@
 @import './login';
 @import './postCard';
 @import './deleteModal';
+@import './home';
+@import './menuBar';
 h1 {
   font-weight: bold;
+}
+
+body {
+  background-color: #f6f7f8;
 }
