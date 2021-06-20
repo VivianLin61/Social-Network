@@ -48,11 +48,11 @@ function MenuBar() {
         </Nav.Item>
         <Nav.Item
           as='li'
-          name='register'
-          active={activeItem == 'register'}
+          active={activeItem === 'register'}
           onClick={handleItemClick}
+          name='register'
         >
-          <Nav.Link to='/register'>Register</Nav.Link>
+          <Nav.Link href='/register'>Register</Nav.Link>
         </Nav.Item>
       </div>
     </Nav>

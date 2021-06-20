@@ -33,7 +33,7 @@ function Register(props) {
   }
 
   return (
-    <div className='form-container'>
+    <div style={{ marginTop: '10px' }} className='form-container'>
       <Form onSubmit={onSubmit}>
         <h1>Regsiter</h1>
 
