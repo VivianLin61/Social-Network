@@ -2,8 +2,9 @@ import React, { useContext, useState, useRef } from 'react'
 import gql from 'graphql-tag'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import moment from 'moment'
-import { Card, Form, Grid, Image } from 'semantic-ui-react'
-
+import { BsThreeDots } from 'react-icons/bs'
+// import { Card, Form, Grid, Image } from 'semantic-ui-react'
+import { Row, Col, FormControl, InputGroup, Button } from 'react-bootstrap'
 import { AuthContext } from '../context/auth'
 import LikeButton from '../components/LikeButton'
 import DeleteButton from '../components/DeleteButton'
@@ -47,77 +48,101 @@ function SinglePost(props) {
       data.getPost
 
     postMarkup = (
-      <Grid>
-        <Grid.Row>
-          <Grid.Column width={2}>
-            <Image
-              src='https://react.semantic-ui.com/images/avatar/large/molly.png'
-              size='small'
-              float='right'
-            />
-          </Grid.Column>
-          <Grid.Column width={10}>
-            <Card fluid>
-              <Card.Content>
-                <Card.Header>{username}</Card.Header>
-                <Card.Meta>{moment(createdAt).fromNow()}</Card.Meta>
-                <Card.Description>{body}</Card.Description>
-              </Card.Content>
-              <hr />
-              <Card.Content extra>
-                <LikeButton user={user} post={{ id, likeCount, likes }} />
-
-                {user && user.username === username && (
-                  <DeleteButton postId={id} callback={deletePostCallback} />
-                )}
-              </Card.Content>
-            </Card>
-            {user && (
-              <Card fluid>
-                <Card.Content>
-                  <p>Post a comment</p>
-                  <Form>
-                    <div className='ui action input fluid'>
-                      <input
-                        type='text'
-                        placeholder='Comment..'
-                        name='comment'
-                        value={comment}
-                        onChange={(event) => setComment(event.target.value)}
-                        ref={commentInputRef}
-                      />
-                      <button
-                        type='submit'
-                        className='ui button teal'
-                        disabled={comment.trim() === ''}
-                        onClick={submitComment}
-                      >
-                        Submit
-                      </button>
+      <>
+        <div className='singlePostContainer'>
+          <Row>
+            <Col xs={2}>
+              <img
+                src='https://react.semantic-ui.com/images/avatar/large/molly.png'
+                alt=''
+              />
+            </Col>
+            <Col xs={10}>
+              <Row xs={2} className='justify-content-md-center postBody'>
+                <Col xs={12}>
+                  <Row>
+                    <div>
+                      <span>{username}</span>
+                      <span>{moment(createdAt).fromNow(true) + ' ago'}</span>
                     </div>
-                  </Form>
-                </Card.Content>
-              </Card>
-            )}
+                  </Row>
+                </Col>
+                <Col style={{ height: '70px' }} xs={12}>
+                  {body}
+                </Col>
+                <Col className='align-text-bottom' xs={12}></Col>
+              </Row>
+            </Col>
+            <Col xs={12}>
+              <Row xs={2} className='justify-content-md-center createPostBody'>
+                <Col className='h-20' xs={12}>
+                  <div>{`${comments.length} comments`}</div>
 
+                  <hr />
+                </Col>
+                {user ? (
+                  <Col className='h-80' xs={12}>
+                    <Row>
+                      <Col xs={10}>
+                        <InputGroup className='mb-3 createPostForm'>
+                          <FormControl
+                            placeholder={`What's on your mind, ${user.username}?`}
+                            aria-label='createPostForm'
+                            aria-describedby='basic-addon1'
+                            onChange={(event) => setComment(event.target.value)}
+                            value={comment}
+                            ref={commentInputRef}
+                          />
+                        </InputGroup>
+                      </Col>
+                      <Col xs={2}>
+                        <div className='submitComment'>
+                          <Button onClick={submitComment}>Submit</Button>
+                        </div>
+                      </Col>
+                    </Row>
+                  </Col>
+                ) : null}{' '}
+              </Row>
+            </Col>
             {comments.map((comment, index) => (
-              <Card key={index} fluid>
-                <Card.Content>
-                  {user && user.username === comment.username && (
-                    <DeleteButton postId={id} commentId={comment.id} />
-                  )}
-                  <Card.Header>{comment.username}</Card.Header>
-                  <Card.Meta>{moment(comment.createdAt).fromNow()}</Card.Meta>
-                  <Card.Description>{comment.body}</Card.Description>
-                </Card.Content>
-              </Card>
+              // eslint-disable-next-line jsx-a11y/alt-text
+              <div className='commentContainer' key={index}>
+                <Row>
+                  <Col xs={1}>
+                    <img
+                      src='https://react.semantic-ui.com/images/avatar/large/molly.png'
+                      size='small'
+                      float='right'
+                      alt='none'
+                    />
+                  </Col>
+                  <Col xs={11}>
+                    <Row className='commentBody'>
+                      <Col xs={12}>
+                        <span>{comment.username}</span>
+
+                        <span>
+                          {moment(comment.createdAt).fromNow(true) + ' ago'}
+                        </span>
+                        {user && user.username === comment.username ? (
+                          <BsThreeDots onClick={updateComment} />
+                        ) : null}
+                      </Col>
+                      <Col xs={12}>
+                        <div>{comment.body}</div>
+                      </Col>
+                    </Row>
+                  </Col>
+                </Row>
+              </div>
             ))}
-          </Grid.Column>
-        </Grid.Row>
-      </Grid>
+          </Row>
+        </div>
+      </>
     )
   }
-
+  function updateComment() {}
   function deletePostCallback() {
     props.history.push('/')
   }

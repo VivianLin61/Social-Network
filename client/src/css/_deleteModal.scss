@@ -1,0 +1,30 @@
+.deleteModal {
+  .modal-content {
+    border-radius: 20px;
+  }
+  .deletePostBody {
+    text-align: center;
+    h4 {
+      font-weight: bold;
+    }
+  }
+  .modal-footer {
+    flex-wrap: nowrap;
+
+    button {
+      width: 50%;
+      height: 40px;
+      font-weight: bold;
+      border: none;
+      border-radius: 15px;
+      &:nth-child(1) {
+        font-weight: bold;
+        background-color: #6a6a6a;
+      }
+      &:nth-child(2) {
+        font-weight: bold;
+        background-color: #f34535;
+      }
+    }
+  }
+}
