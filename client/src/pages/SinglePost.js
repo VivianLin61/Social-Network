@@ -52,7 +52,7 @@ function SinglePost(props) {
           <Row>
             <Col xs={2}>
               <img
-                src='https://react.semantic-ui.com/images/avatar/large/molly.png'
+                src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
                 alt=''
               />
             </Col>
@@ -110,8 +110,8 @@ function SinglePost(props) {
                 <Row>
                   <Col xs={1}>
                     <img
-                      src='https://react.semantic-ui.com/images/avatar/large/molly.png'
                       size='small'
+                      src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
                       float='right'
                       alt='none'
                     />

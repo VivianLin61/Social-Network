@@ -28,7 +28,7 @@ function CreatePostModal(props) {
       values.body = ''
     },
   })
-
+//character count 250 or less
   const handlePost = (e) => {
     props.onHide()
     onSubmit(e)

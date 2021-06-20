@@ -1,0 +1,62 @@
+.profile_container {
+  margin: auto;
+  height: 100%;
+  width: 60%;
+  background-color: white;
+  border-radius: 15px;
+  padding: 40px;
+  font-size: 20px;
+  h4 {
+    font-weight: bold;
+    font-size: 45px;
+  }
+  .update_item,
+  .update_photo {
+    padding-top: 5px;
+    display: flex;
+    justify-content: space-between;
+    margin: auto;
+    .info {
+      div {
+        &:first-child {
+          font-weight: bold;
+          color: black;
+          padding-bottom: 5px;
+        }
+      }
+    }
+    .update_icon {
+      position: relative;
+      svg {
+        margin-left: -30px;
+        position: absolute;
+        top: 50%;
+        -ms-transform: translateY(-50%);
+        transform: translateY(-50%);
+      }
+    }
+  }
+}
+.update_photo {
+  .info {
+    div {
+      &:nth-child(2) {
+        color: gray;
+        margin-top: 15px;
+        font-size: 25px;
+      }
+    }
+  }
+}
+#profile_input[type='file'] {
+  display: none;
+}
+.img-holder {
+  margin-left: -30px;
+  img {
+    width: 100px;
+    cursor: pointer;
+    height: 100px;
+    border-radius: 15px;
+  }
+}

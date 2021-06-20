@@ -36,7 +36,6 @@ function MenuBar() {
       <Nav.Item as='li'>
         <Nav.Link href='/'>Social</Nav.Link>
       </Nav.Item>
-
       <div className='rightMenu'>
         <Nav.Item
           name='login'
