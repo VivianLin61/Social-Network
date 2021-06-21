@@ -1,0 +1,42 @@
+.disabledInput {
+  pointer-events: none;
+}
+.updateInfoModal {
+  @media (min-width: 992px) {
+    .modal-lg,
+    .modal-xl {
+      max-width: 500px;
+    }
+  }
+
+  .modal-title {
+    font-size: 30px;
+  }
+  .modal-content {
+    border-radius: 30px;
+    padding: 10px;
+    .modal-body {
+      input {
+        margin-bottom: 20px;
+      }
+      label {
+        color: gray;
+      }
+    }
+  }
+  .modal-footer {
+    display: flex;
+    justify-content: space-evenly;
+    button {
+      width: 40%;
+      height: 50px;
+      border-radius: 15px;
+      font-size: 20px;
+      font-weight: bold;
+      &:first-child {
+        background-color: gray;
+        border-color: gray;
+      }
+    }
+  }
+}
