@@ -3,44 +3,7 @@ import { Modal, Button } from 'react-bootstrap'
 import { Form } from 'react-bootstrap'
 const UpdateInfoModal = (props) => {
   const [body, setBody] = useState(null)
-  function ChangeUsernameBody() {
-    return (
-      <>
-        <Form.Label>Current Username</Form.Label>
-        <Form.Control
-          type='text'
-          placeholder={props.user.username}
-          readOnly
-          className='disabledInput'
-        />
-        <Form.Control type='text' placeholder='New Username' />
-      </>
-    )
-  }
-  function ChangeEmailBody() {
-    return (
-      <>
-        <Form.Label>Current Email</Form.Label>
-        <Form.Control
-          type='text'
-          placeholder={props.user.email}
-          readOnly
-          className='disabledInput'
-        />
-        <Form.Control type='text' placeholder='New Email' />
-      </>
-    )
-  }
-  function ChangePasswordBody() {
-    return (
-      <>
-        <Form.Label>Current Password</Form.Label>
-        <Form.Control type='text' placeholder='Current Password' />
-        <Form.Control type='text' placeholder='New password' />
-        <Form.Control type='text' placeholder='Confirm new password' />
-      </>
-    )
-  }
+
   return (
     <Modal
       {...props}
@@ -55,14 +18,86 @@ const UpdateInfoModal = (props) => {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        {props.updateType === 'Email' && <ChangeEmailBody />}
-        {props.updateType === 'Username' && <ChangeUsernameBody />}
-        {props.updateType === 'Password' && <ChangePasswordBody />}
+        <Form onSubmit={props.onSubmit}>
+          {props.type === 'Email' && (
+            <>
+              <Form.Label>Current Email</Form.Label>
+              <Form.Control
+                type='text'
+                placeholder={props.user.email}
+                readOnly
+                className='disabledInput'
+              />
+              <Form.Control
+                type='text'
+                name='email'
+                onChange={props.onChange}
+                placeholder='New Email'
+              />
+            </>
+          )}
+          {props.type === 'Username' && (
+            <>
+              <Form.Label>Current Username</Form.Label>
+              <Form.Control
+                type='text'
+                placeholder={props.user.username}
+                readOnly
+                className='disabledInput'
+              />
+              <Form.Control
+                type='username'
+                placeholder='New Username'
+                onChange={props.onChange}
+                name='username'
+              />
+            </>
+          )}
+          {props.type === 'Password' && (
+            <>
+              <Form.Label>Current Password</Form.Label>
+              <Form.Control
+                type='password'
+                name='currentPassword'
+                placeholder='Current Password'
+              />
+              <Form.Control
+                type='password'
+                name='password'
+                onChange={props.onChange}
+                placeholder='New password'
+              />
+              <Form.Control
+                type='password'
+                name='confirmPassword'
+                onChange={props.onChange}
+                placeholder='Confirm new password'
+              />
+            </>
+          )}{' '}
+          {props.errors.confirmPassword ? (
+            <>
+              {' '}
+              <div className='modalError'>Passwords must match</div>
+            </>
+          ) : (
+            <> </>
+          )}
+          {props.errors.general ? (
+            <>
+              <div className='modalError'>Current password is incorrect</div>
+            </>
+          ) : (
+            <> </>
+          )}
+          <div className='footer'>
+            <Button onClick={props.onHide}>Cancel</Button>
+            <Button variant='primary' type='submit'>
+              Submit
+            </Button>
+          </div>
+        </Form>
       </Modal.Body>
-      <Modal.Footer>
-        <Button onClick={props.onHide}>Cancel</Button>
-        <Button onClick={props.onHide}>Save</Button>
-      </Modal.Footer>
     </Modal>
   )
 }

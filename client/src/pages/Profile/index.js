@@ -2,6 +2,9 @@ import React, { useContext, useState } from 'react'
 import { AuthContext } from '../../context/auth'
 import UpdateInfo from './UpdateInfo.js'
 import UpdateInfoModal from './UpdateInfoModal.js'
+import { useMutation } from '@apollo/react-hooks'
+import { gql } from '@apollo/client'
+import { useForm } from '../../util/hooks'
 function Profile() {
   const user = useContext(AuthContext).user
   const [profileImg, setProfileImg] = useState(
@@ -9,6 +12,29 @@ function Profile() {
   )
   const [updateModal, showUpdateModal] = useState(false)
   const [updateType, setUpdateType] = useState('')
+
+  const { onChange, onSubmit, values } = useForm(updateUser)
+  const [username, setUsername] = useState(user.username)
+  const [email, setEmail] = useState(user.email)
+  const [errors, setErrors] = useState({})
+  const [changeUserInfo, { loading }] = useMutation(UPDATE_USER, {
+    update(_, { data: { updateUser: userData } }) {
+      console.log(userData)
+      showUpdateModal(false)
+      setEmail(userData.email)
+      setUsername(userData.username)
+    },
+    onError(err) {
+      setErrors(err.graphQLErrors[0].extensions.errors)
+    },
+    variables: {
+      ...values,
+      _id: user.id,
+    },
+  })
+  function updateUser() {
+    changeUserInfo()
+  }
   const imageHandler = (e) => {
     const reader = new FileReader()
     reader.onload = () => {
@@ -42,13 +68,13 @@ function Profile() {
             name='PHOTO'
           />
           <UpdateInfo
-            value={user.username}
+            value={username}
             handleUpdateInfo={handleUpdateUsername}
             name='USERNAME'
           />
           <UpdateInfo
             handleUpdateInfo={handleUpdateEmail}
-            value={user.email}
+            value={email}
             name='EMAIL'
           />
           <UpdateInfo
@@ -60,8 +86,12 @@ function Profile() {
           <UpdateInfoModal
             show={updateModal}
             onHide={() => showUpdateModal(false)}
-            updateType={updateType}
+            type={updateType}
             user={user}
+            onChange={onChange}
+            onSubmit={onSubmit}
+            values={values}
+            errors={errors}
           />
         </div>
       ) : (
@@ -70,5 +100,27 @@ function Profile() {
     </>
   )
 }
+export const UPDATE_USER = gql`
+  mutation UpdateUser(
+    $_id: String!
+    $email: String
+    $password: String
+    $username: String
+    $currentPassword: String
+    $confirmPassword: String
+  ) {
+    updateUser(
+      _id: $_id
+      email: $email
+      password: $password
+      username: $username
+      currentPassword: $currentPassword
+      confirmPassword: $confirmPassword
+    ) {
+      username
+      email
+    }
+  }
+`
 
 export default Profile

@@ -24,7 +24,7 @@
       }
     }
   }
-  .modal-footer {
+  .footer {
     display: flex;
     justify-content: space-evenly;
     button {
@@ -39,4 +39,10 @@
       }
     }
   }
+}
+.modalError {
+  color: red;
+  font-weight: bold;
+  padding-bottom: 20px;
+  font-size: 16px;
 }
