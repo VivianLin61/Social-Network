@@ -6,7 +6,7 @@ const typeDefs = require('./graphql/typeDefs')
 const resolvers = require('./graphql/resolvers')
 const { graphqlUploadExpress } = require('graphql-upload')
 const PORT = process.env.port || 5000
-
+const cors = require('cors')
 env.config()
 // console.log(process.env.MONGO_URI)
 
@@ -20,6 +20,7 @@ const server = new ApolloServer({
 const app = express()
 app.use(express.static('public'))
 app.use(graphqlUploadExpress({ maxFileSize: 100000, maxFiles: 10 }))
+app.use(cors())
 server.applyMiddleware({ app })
 
 mongoose

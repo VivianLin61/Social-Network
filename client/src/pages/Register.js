@@ -23,7 +23,7 @@ function Register(props) {
       props.history.push('/')
     },
     onError(err) {
-      setErrors(err.graphQLErrors[0].extensions.exception.errors)
+      // (err.graphqlerrors[0].extensions.exception.errors)seterrors
     },
     variables: values,
   })

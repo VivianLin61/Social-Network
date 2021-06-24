@@ -81,6 +81,8 @@ module.exports = {
         username,
         password,
         createdAt: new Date().toISOString(),
+        profileImage:
+          'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png',
       })
 
       const res = await newUser.save()
@@ -147,18 +149,26 @@ module.exports = {
       const updatedUser = await User.findOne({ _id: objectId })
       return updatedUser
     },
-    addphoto: async (parent, { file }) => {
+    addProfileImage: async (parent, { file }, args) => {
+      const { _id } = args.req.body.variables
+      const objectId = new ObjectId(_id)
       const { createReadStream, filename, mimetype } = await file
       const location = path.join(
         '/Users/vivian/Desktop/Social-Network',
         `/public/images/${filename}`
       )
-      console.log(location)
-      const myfile = createReadStream()
+
+      const url = `http://localhost:5000/images/${filename}`,
+        myfile = createReadStream()
+      const updated = await User.updateOne(
+        { _id: objectId },
+        { $set: { profileImage: url } }
+      )
 
       await myfile.pipe(fs.createWriteStream(location))
+
       return {
-        url: `http://localhost:5000/images/${filename}`,
+        url: url,
       }
     },
   },
