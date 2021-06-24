@@ -25,7 +25,7 @@ function MenuBar() {
             <Nav.Link href={`/profile/${user.id}`}>{user.username}</Nav.Link>
           </Nav.Item>
           <Nav.Item as='li' onClick={logout}>
-            <Nav.Link>Logout</Nav.Link>
+            <Nav.Link href={'/login'}>Logout</Nav.Link>
           </Nav.Item>
         </div>
       </Nav>

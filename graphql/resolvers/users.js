@@ -7,9 +7,9 @@ const {
   validateLoginInput,
   validateUpdateInput,
 } = require('../../util/validators')
-
+const fs = require('fs')
+const path = require('path')
 const User = require('../../models/User')
-
 function generateToken(user) {
   return jwt.sign(
     {
@@ -143,8 +143,23 @@ module.exports = {
           { $set: { email: email } }
         )
       }
+
       const updatedUser = await User.findOne({ _id: objectId })
       return updatedUser
+    },
+    addphoto: async (parent, { file }) => {
+      const { createReadStream, filename, mimetype } = await file
+      const location = path.join(
+        '/Users/vivian/Desktop/Social-Network',
+        `/public/images/${filename}`
+      )
+      console.log(location)
+      const myfile = createReadStream()
+
+      await myfile.pipe(fs.createWriteStream(location))
+      return {
+        url: `http://localhost:5000/images/${filename}`,
+      }
     },
   },
 }

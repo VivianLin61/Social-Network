@@ -1,6 +1,10 @@
 const { gql } = require('apollo-server')
 
 module.exports = gql`
+  scalar FileUpload
+  type FieldUpload {
+    url: String!
+  }
   type Post {
     id: ID!
     body: String!
@@ -56,5 +60,6 @@ module.exports = gql`
     createComment(postId: String!, body: String!): Post!
     deleteComment(postId: ID!, commentId: ID!): Post!
     likePost(postId: ID!): Post!
+    addphoto(file: FileUpload!): FieldUpload!
   }
 `

@@ -14,8 +14,8 @@ function Profile() {
   const [updateType, setUpdateType] = useState('')
 
   const { onChange, onSubmit, values } = useForm(updateUser)
-  const [username, setUsername] = useState(user.username)
-  const [email, setEmail] = useState(user.email)
+  const [username, setUsername] = useState(user ? user.username : '')
+  const [email, setEmail] = useState(user ? user.email : '')
   const [errors, setErrors] = useState({})
   const [changeUserInfo, { loading }] = useMutation(UPDATE_USER, {
     update(_, { data: { updateUser: userData } }) {
@@ -29,7 +29,7 @@ function Profile() {
     },
     variables: {
       ...values,
-      _id: user.id,
+      _id: user ? user.id : '',
     },
   })
   function updateUser() {
