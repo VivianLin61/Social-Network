@@ -12,7 +12,7 @@ function Profile() {
   )
   const [updateModal, showUpdateModal] = useState(false)
   const [updateType, setUpdateType] = useState('')
-
+  const [imageFile, setImageFile] = useState(null)
   const { onChange, onSubmit, values } = useForm(updateUser)
   const [username, setUsername] = useState(user ? user.username : '')
   const [email, setEmail] = useState(user ? user.email : '')
@@ -32,16 +32,27 @@ function Profile() {
       _id: user ? user.id : '',
     },
   })
+  const [updateUserImage, { loading: loadPhoto }] = useMutation(
+    ADD_PROFILE_IMAGE,
+    {
+      onCompleted: (data) => console.log(data),
+    }
+  )
   function updateUser() {
     changeUserInfo()
   }
   const imageHandler = (e) => {
+    const file = e.target.files[0]
     const reader = new FileReader()
     reader.onload = () => {
       if (reader.readyState === 2) {
         setProfileImg(reader.result)
       }
     }
+    if (!file) return
+    updateUserImage({
+      variables: { file, _id: user ? user.id : '' },
+    })
     reader.readAsDataURL(e.target.files[0])
   }
   const handleUpdateUsername = (e) => {
@@ -100,6 +111,14 @@ function Profile() {
     </>
   )
 }
+
+export const ADD_PROFILE_IMAGE = gql`
+  mutation AddProfileImage($_id: String!, $file: FileUpload!) {
+    addProfileImage(_id: $_id, file: $file) {
+      url
+    }
+  }
+`
 export const UPDATE_USER = gql`
   mutation UpdateUser(
     $_id: String!
