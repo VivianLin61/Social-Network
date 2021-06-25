@@ -7,8 +7,8 @@ import { gql } from '@apollo/client'
 import { useForm } from '../../util/hooks'
 function Profile() {
   const { user } = useContext(AuthContext)
+  const context = useContext(AuthContext)
   const [show, setShow] = useState(false)
-
   const [profileImg, setProfileImg] = useState(user ? user.profileImage : '')
   const [updateModal, showUpdateModal] = useState(false)
   const [updateType, setUpdateType] = useState('')
@@ -22,9 +22,10 @@ function Profile() {
       setShow(false)
       setEmail(userData.email)
       setUsername(userData.username)
+      context.updateUser(userData)
     },
     onError(err) {
-      setErrors(err.graphQLErrors[0].extensions.errors)
+      console.log(err)
     },
     variables: {
       ...values,
@@ -34,7 +35,7 @@ function Profile() {
   const [updateUserImage, { loading: loadPhoto }] = useMutation(
     ADD_PROFILE_IMAGE,
     {
-      onCompleted: (data) => console.log(data),
+      onCompleted: (data) => context.updateUser(data.addProfileImage),
     }
   )
   function updateUser() {
@@ -49,6 +50,7 @@ function Profile() {
       }
     }
     if (!file) return
+
     updateUserImage({
       variables: { file, _id: user ? user.id : '' },
     })
@@ -101,7 +103,7 @@ function Profile() {
             onSubmit={onSubmit}
             values={values}
             errors={errors}
-            showPopup={show}
+            popup={show}
             setShow={setShow}
           />
         </div>
@@ -115,7 +117,10 @@ function Profile() {
 export const ADD_PROFILE_IMAGE = gql`
   mutation AddProfileImage($_id: String!, $file: FileUpload!) {
     addProfileImage(_id: $_id, file: $file) {
-      url
+      username
+      email
+      profileImage
+      id
     }
   }
 `
@@ -138,6 +143,8 @@ export const UPDATE_USER = gql`
     ) {
       username
       email
+      profileImage
+      id
     }
   }
 `

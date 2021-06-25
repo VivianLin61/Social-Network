@@ -11,6 +11,8 @@ function Home() {
     useQuery(FETCH_POSTS_QUERY)
   //If user show post form where user can post something
   //Loads all the posts.
+
+  console.log(user)
   const [modalShow, setModalShow] = React.useState(false)
   return (
     <>

@@ -61,6 +61,6 @@ module.exports = gql`
     createComment(postId: String!, body: String!): Post!
     deleteComment(postId: ID!, commentId: ID!): Post!
     likePost(postId: ID!): Post!
-    addProfileImage(_id: String!, file: FileUpload!): ProfileImage!
+    addProfileImage(_id: String!, file: FileUpload!): User!
   }
 `

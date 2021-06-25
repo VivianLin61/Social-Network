@@ -166,10 +166,8 @@ module.exports = {
       )
 
       await myfile.pipe(fs.createWriteStream(location))
-
-      return {
-        url: url,
-      }
+      const updatedUser = await User.findOne({ _id: objectId })
+      return updatedUser
     },
   },
 }

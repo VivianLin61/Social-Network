@@ -106,7 +106,7 @@ const UpdateInfoModal = (props) => {
           </div>
         </Form>
       </Modal.Body>{' '}
-      <PopUpModal show={props.showPopup} handleClose={props.handleClosePopup} />
+      <PopUpModal show={props.popup} handleClose={props.handleClosePopup} />
     </Modal>
   )
 }
