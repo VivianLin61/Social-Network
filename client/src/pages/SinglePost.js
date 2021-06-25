@@ -3,10 +3,8 @@ import gql from 'graphql-tag'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import moment from 'moment'
 import { BsThreeDots } from 'react-icons/bs'
-// import { Card, Form, Grid, Image } from 'semantic-ui-react'
 import { Row, Col, FormControl, InputGroup, Button } from 'react-bootstrap'
 import { AuthContext } from '../context/auth'
-import LikeButton from '../components/LikeButton'
 
 function SinglePost(props) {
   const postId = props.match.params.postId
@@ -27,7 +25,7 @@ function SinglePost(props) {
 
   const { user } = useContext(AuthContext)
 
-  const { data, loading, error } = useQuery(FETCH_POST_QUERY, {
+  const { data, error } = useQuery(FETCH_POST_QUERY, {
     onError(error) {
       console.log(error)
     },
@@ -43,8 +41,7 @@ function SinglePost(props) {
   if (!data) {
     postMarkup = <p>Loading post...</p>
   } else {
-    const { id, body, createdAt, username, comments, likes, likeCount } =
-      data.getPost
+    const { body, createdAt, username, comments } = data.getPost
 
     postMarkup = (
       <>

@@ -46,3 +46,25 @@
   padding-bottom: 20px;
   font-size: 16px;
 }
+.popUp-modal {
+  .modal-dialog {
+    margin-top: 0px;
+  }
+  .modal-content {
+    background-color: gray;
+    color: white;
+  }
+  .modal-header {
+    padding: 8px !important;
+    display: block;
+    border-bottom: none;
+    div {
+      text-align: center;
+    }
+  }
+}
+
+.disableButton {
+  pointer-events: none;
+  opacity: 0.8;
+}

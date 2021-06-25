@@ -1,9 +1,8 @@
 import React, { useState } from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import { Form } from 'react-bootstrap'
+import PopUpModal from './PopupModal.js'
 const UpdateInfoModal = (props) => {
-  const [body, setBody] = useState(null)
-
   return (
     <Modal
       {...props}
@@ -91,13 +90,23 @@ const UpdateInfoModal = (props) => {
             <> </>
           )}
           <div className='footer'>
-            <Button onClick={props.onHide}>Cancel</Button>
-            <Button variant='primary' type='submit'>
+            <Button
+              className={props.showPopup && 'disableButton'}
+              onClick={props.onHide}
+            >
+              Cancel
+            </Button>
+            <Button
+              onClick={() => props.setShow(true)}
+              variant='primary'
+              type='submit'
+            >
               Submit
             </Button>
           </div>
         </Form>
-      </Modal.Body>
+      </Modal.Body>{' '}
+      <PopUpModal show={props.showPopup} handleClose={props.handleClosePopup} />
     </Modal>
   )
 }

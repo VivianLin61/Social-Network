@@ -7,9 +7,9 @@ import { gql } from '@apollo/client'
 import { useForm } from '../../util/hooks'
 function Profile() {
   const { user } = useContext(AuthContext)
+  const [show, setShow] = useState(false)
 
   const [profileImg, setProfileImg] = useState(user ? user.profileImage : '')
-
   const [updateModal, showUpdateModal] = useState(false)
   const [updateType, setUpdateType] = useState('')
   const { onChange, onSubmit, values } = useForm(updateUser)
@@ -19,7 +19,7 @@ function Profile() {
   const [changeUserInfo, { loading }] = useMutation(UPDATE_USER, {
     update(_, { data: { updateUser: userData } }) {
       showUpdateModal(false)
-      console.log(userData)
+      setShow(false)
       setEmail(userData.email)
       setUsername(userData.username)
     },
@@ -101,6 +101,8 @@ function Profile() {
             onSubmit={onSubmit}
             values={values}
             errors={errors}
+            showPopup={show}
+            setShow={setShow}
           />
         </div>
       ) : (

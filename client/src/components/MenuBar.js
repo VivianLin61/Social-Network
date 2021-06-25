@@ -1,12 +1,8 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext } from 'react'
 import { Nav } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
 import { AuthContext } from '../context/auth'
 function MenuBar() {
   const { user, logout } = useContext(AuthContext)
-  const pathname = window.location.pathname
-
-  const path = pathname === '/' ? 'home' : pathname.substr(1)
 
   const menuBar = user ? (
     //show user name and logout

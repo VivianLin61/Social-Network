@@ -15,7 +15,6 @@ import Register from './pages/Register'
 import SinglePost from './pages/SinglePost'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Profile from './pages/Profile/index.js'
-
 function App() {
   return (
     <AuthProvider>

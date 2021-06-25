@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
 import { GrFormClose } from 'react-icons/gr'
 import gql from 'graphql-tag'
