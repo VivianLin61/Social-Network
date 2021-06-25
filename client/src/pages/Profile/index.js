@@ -6,21 +6,20 @@ import { useMutation } from '@apollo/react-hooks'
 import { gql } from '@apollo/client'
 import { useForm } from '../../util/hooks'
 function Profile() {
-  const user = useContext(AuthContext).user
-  const [profileImg, setProfileImg] = useState(
-    'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
-  )
+  const { user } = useContext(AuthContext)
+
+  const [profileImg, setProfileImg] = useState(user ? user.profileImage : '')
+
   const [updateModal, showUpdateModal] = useState(false)
   const [updateType, setUpdateType] = useState('')
-  const [imageFile, setImageFile] = useState(null)
   const { onChange, onSubmit, values } = useForm(updateUser)
   const [username, setUsername] = useState(user ? user.username : '')
   const [email, setEmail] = useState(user ? user.email : '')
   const [errors, setErrors] = useState({})
   const [changeUserInfo, { loading }] = useMutation(UPDATE_USER, {
     update(_, { data: { updateUser: userData } }) {
-      console.log(userData)
       showUpdateModal(false)
+      console.log(userData)
       setEmail(userData.email)
       setUsername(userData.username)
     },
@@ -75,7 +74,6 @@ function Profile() {
           <UpdateInfo
             profileImg={profileImg}
             imageHandler={imageHandler}
-            value=''
             name='PHOTO'
           />
           <UpdateInfo

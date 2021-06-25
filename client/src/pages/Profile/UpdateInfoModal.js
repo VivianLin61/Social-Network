@@ -14,7 +14,7 @@ const UpdateInfoModal = (props) => {
     >
       <Modal.Header>
         <Modal.Title id='contained-modal-title-vcenter'>
-          {`Change ${props.updateType}`}
+          {`Change ${props.type}`}
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>

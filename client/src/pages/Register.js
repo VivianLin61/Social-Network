@@ -118,6 +118,7 @@ const REGISTER_USER = gql`
       email
       username
       createdAt
+      profileImage
       token
     }
   }

@@ -16,7 +16,6 @@ function Login(props) {
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(_, { data: { login: userData } }) {
       context.login(userData)
-      // console.log(result.data.login)
       props.history.push('/')
     },
     onError(err) {
@@ -85,6 +84,7 @@ const LOGIN_USER = gql`
       email
       username
       createdAt
+      profileImage
       token
     }
   }
