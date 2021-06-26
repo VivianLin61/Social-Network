@@ -9,46 +9,13 @@ import { BsThreeDots } from 'react-icons/bs'
 import { TiEdit } from 'react-icons/ti'
 import { BiTrash } from 'react-icons/bi'
 import DeleteModal from '../components/Modals/DeleteModal.js'
+import DropDownMenu from '../components/DropDownMenu.js'
 function PostCard({ post }) {
   const { body, createdAt, id, username, likeCount, commentCount, likes } = post
   const { user } = useContext(AuthContext)
   const [open, setOpen] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
 
-  function handleEdit() {
-    console.log('edit')
-  }
-
-  function handleDelete() {
-    console.log('delete')
-    setShowDeleteModal(true)
-    setOpen(false)
-  }
-  function DropdownMenu() {
-    console.log('open')
-    function DropdownItem(props) {
-      return (
-        // eslint-disable-next-line jsx-a11y/anchor-is-valid
-        <button href='#' onClick={props.handleDropdown} className='menu-item'>
-          {props.children}
-        </button>
-      )
-    }
-
-    return (
-      <div className='dropdown'>
-        <div className='square'></div>
-        <DropdownItem handleDropdown={handleEdit}>
-          <TiEdit />
-          <span>Edit</span>
-        </DropdownItem>
-        <DropdownItem handleDropdown={handleDelete}>
-          <BiTrash />
-          <span>Delete</span>
-        </DropdownItem>
-      </div>
-    )
-  }
   return (
     <>
       <div className='postCardContainer'>
@@ -61,7 +28,12 @@ function PostCard({ post }) {
           </Col>
           <Col xs={10}>
             <Row xs={2} className='justify-content-md-center postBody'>
-              {open && <DropdownMenu />}
+              {open && (
+                <DropDownMenu
+                  setShowDeleteModal={setShowDeleteModal}
+                  setOpen={setOpen}
+                />
+              )}
               <Col xs={12}>
                 <Row>
                   <div>

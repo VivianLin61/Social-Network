@@ -55,6 +55,7 @@
 }
 .commentBody {
   @include textBody();
+  position: relative;
   padding-top: 0px;
   span {
     font-weight: bold;
@@ -64,7 +65,7 @@
       font-weight: 400;
     }
   }
-  svg {
+  .editModal {
     float: right;
     margin-right: 30px;
     font-size: 20px;

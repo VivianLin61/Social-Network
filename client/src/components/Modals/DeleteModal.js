@@ -7,6 +7,7 @@ function DeleteModal(props) {
   const mutation = props.comment_id
     ? DELETE_COMMENT_MUTATION
     : DELETE_POST_MUTATION
+  const title = props.comment_id ? 'Delete Comment' : 'Delete Post'
   const [deletePostOrMutation] = useMutation(mutation, {
     update(proxy) {
       props.onHide()
@@ -40,7 +41,7 @@ function DeleteModal(props) {
       className='deleteModal'
     >
       <Modal.Body className='deletePostBody'>
-        <h4>Delete Post</h4>
+        <h4>Delete Comment</h4>
         <p>This cannot be undone and will be removed from your profile.</p>
       </Modal.Body>
       <Modal.Footer>

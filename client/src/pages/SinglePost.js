@@ -2,14 +2,12 @@ import React, { useContext, useState, useRef } from 'react'
 import gql from 'graphql-tag'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import moment from 'moment'
-import { BsThreeDots } from 'react-icons/bs'
 import { Row, Col, FormControl, InputGroup, Button } from 'react-bootstrap'
 import { AuthContext } from '../context/auth'
-
+import CommentCard from '../components/CommentCard.js'
 function SinglePost(props) {
   const postId = props.match.params.postId
   const [comment, setComment] = useState('')
-
   const commentInputRef = useRef(null)
   const [submitComment] = useMutation(SUBMIT_COMMENT_MUTATION, {
     update() {
@@ -41,7 +39,7 @@ function SinglePost(props) {
   if (!data) {
     postMarkup = <div className='loader'>Loading...</div>
   } else {
-    const { body, createdAt, username, comments } = data.getPost
+    const { id, body, createdAt, username, comments } = data.getPost
 
     postMarkup = (
       <>
@@ -101,33 +99,7 @@ function SinglePost(props) {
             {comments.map((comment, index) => (
               // eslint-disable-next-line jsx-a11y/alt-text
               <div className='commentContainer' key={index}>
-                <Row>
-                  <Col xs={1}>
-                    <img
-                      size='small'
-                      src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
-                      float='right'
-                      alt='none'
-                    />
-                  </Col>
-                  <Col xs={11}>
-                    <Row className='commentBody'>
-                      <Col xs={12}>
-                        <span>{comment.username}</span>
-
-                        <span>
-                          {moment(comment.createdAt).fromNow(true) + ' ago'}
-                        </span>
-                        {user && user.username === comment.username ? (
-                          <BsThreeDots onClick={updateComment} />
-                        ) : null}
-                      </Col>
-                      <Col xs={12}>
-                        <div>{comment.body}</div>
-                      </Col>
-                    </Row>
-                  </Col>
-                </Row>
+                <CommentCard user={user} comment={comment} postId={postId} />
               </div>
             ))}
           </Row>
