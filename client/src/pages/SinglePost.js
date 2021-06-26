@@ -39,7 +39,7 @@ function SinglePost(props) {
 
   let postMarkup
   if (!data) {
-    postMarkup = <p>Loading post...</p>
+    postMarkup = <div className='loader'>Loading...</div>
   } else {
     const { body, createdAt, username, comments } = data.getPost
 
@@ -48,10 +48,7 @@ function SinglePost(props) {
         <div className='singlePostContainer'>
           <Row>
             <Col xs={2}>
-              <img
-                src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
-                alt=''
-              />
+              <img src={user.profileImage} alt='' />
             </Col>
             <Col xs={10}>
               <Row xs={2} className='justify-content-md-center postBody'>

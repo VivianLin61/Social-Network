@@ -1,6 +1,7 @@
 import React, { useContext } from 'react'
 import { Nav } from 'react-bootstrap'
 import { AuthContext } from '../context/auth'
+import { Link } from 'react-router-dom'
 function MenuBar() {
   const { user, logout } = useContext(AuthContext)
 
@@ -17,7 +18,9 @@ function MenuBar() {
             <Nav.Link href={`/profile/${user.id}`}>{user.username}</Nav.Link>
           </Nav.Item>
           <Nav.Item as='li' onClick={logout}>
-            <Nav.Link href={'/login'}>Logout</Nav.Link>
+            <Link className='nav-link' to={`/login`}>
+              Logout
+            </Link>
           </Nav.Item>
         </div>
       </Nav>

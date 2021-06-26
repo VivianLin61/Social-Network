@@ -3,7 +3,6 @@ const Post = require('../../models/Post')
 const checkAuth = require('../../util/check-auth')
 module.exports = {
   Query: {
-  
     async getPosts() {
       try {
         const posts = await Post.find()
@@ -39,6 +38,7 @@ module.exports = {
         user: user.id,
         username: user.username,
         createdAt: new Date().toISOString(),
+        profileImage: user.profileImage,
       })
 
       const post = await newPost.save()

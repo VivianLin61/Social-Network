@@ -5,13 +5,12 @@ import { FETCH_POSTS_QUERY } from '../util/graphql'
 import PostCard from '../components/PostCard'
 import { Row, Col, InputGroup, FormControl } from 'react-bootstrap'
 import CreatePostModal from '../components/Modals/CreatePostModal.js'
-function Home() {
+function Home(props) {
   const { user } = useContext(AuthContext)
   const { loading, data: { getPosts: posts } = {} } =
     useQuery(FETCH_POSTS_QUERY)
   //If user show post form where user can post something
   //Loads all the posts.
-
   const [modalShow, setModalShow] = React.useState(false)
   return (
     <>
@@ -33,7 +32,7 @@ function Home() {
                           marginTop: '0px',
                           width: '50px',
                         }}
-                        src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
+                        src={user.profileImage}
                         alt=''
                       />
                     </Col>
@@ -44,6 +43,8 @@ function Home() {
                           aria-label='createPostForm'
                           aria-describedby='basic-addon1'
                           onClick={() => setModalShow(true)}
+                          style={{ cursor: 'pointer' }}
+                          readOnly
                         />
                       </InputGroup>
                     </Col>
@@ -55,7 +56,7 @@ function Home() {
         </div>
       )}
       {loading ? (
-        <h1>Loading posts..</h1>
+        <div className='loader'>Loading...</div>
       ) : (
         <div className='postsList'>
           <>

@@ -1,4 +1,4 @@
-import React, { useRef, } from 'react'
+import React, { useRef } from 'react'
 import { Modal, Button, Form } from 'react-bootstrap'
 import { GrFormClose } from 'react-icons/gr'
 import gql from 'graphql-tag'
@@ -28,7 +28,7 @@ function CreatePostModal(props) {
       values.body = ''
     },
   })
-//character count 250 or less
+  //character count 250 or less
   const handlePost = (e) => {
     props.onHide()
     onSubmit(e)
@@ -63,7 +63,7 @@ function CreatePostModal(props) {
             as='textarea'
             rows={3}
             ref={textArea}
-            error={error ? true : false}
+            error={error ? true : undefined}
           />
         </Form.Group>
       </Modal.Body>

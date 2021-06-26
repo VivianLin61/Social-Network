@@ -30,47 +30,51 @@ function Login(props) {
 
   return (
     <div className='container'>
-      <div className='form-container'>
-        <Form onSubmit={onSubmit}>
-          <h1>Login</h1>
-          <Form.Group controlId='formBasicEmail'>
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type='email'
-              name='email'
-              placeholder='Enter email'
-              value={values.email}
-              error={errors.email ? true : undefined}
-              onChange={onChange}
-            />
-          </Form.Group>
+      {loading ? (
+        <div className='loader'>Loading</div>
+      ) : (
+        <div className='form-container'>
+          <Form onSubmit={onSubmit}>
+            <h1>Login</h1>
+            <Form.Group controlId='formBasicEmail'>
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type='email'
+                name='email'
+                placeholder='Enter email'
+                value={values.email}
+                error={errors.email ? true : undefined}
+                onChange={onChange}
+              />
+            </Form.Group>
 
-          <Form.Group controlId='formBasicPassword'>
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type='password'
-              name='password'
-              placeholder='Password'
-              value={values.password == null ? '' : values.password}
-              error={errors.password ? true : undefined}
-              onChange={onChange}
-            />
-          </Form.Group>
-          <Button className='formSubmit' variant='primary' type='submit'>
-            Login
-          </Button>
-        </Form>
+            <Form.Group controlId='formBasicPassword'>
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type='password'
+                name='password'
+                placeholder='Password'
+                value={values.password == null ? '' : values.password}
+                error={errors.password ? true : undefined}
+                onChange={onChange}
+              />
+            </Form.Group>
+            <Button className='formSubmit' variant='primary' type='submit'>
+              Login
+            </Button>
+          </Form>
 
-        {Object.keys(errors).length > 0 && (
-          <div className='ui error message'>
-            <ul className='list'>
-              {Object.values(errors).map((value) => (
-                <li key={value}>{value}</li>
-              ))}
-            </ul>
-          </div>
-        )}
-      </div>
+          {Object.keys(errors).length > 0 && (
+            <div className='ui error message'>
+              <ul className='list'>
+                {Object.values(errors).map((value) => (
+                  <li key={value}>{value}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+        </div>
+      )}
     </div>
   )
 }
