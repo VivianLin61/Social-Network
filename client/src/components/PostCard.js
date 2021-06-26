@@ -6,8 +6,6 @@ import LikeButton from './LikeButton.js'
 import { Row, Col } from 'react-bootstrap'
 import { BiCommentDots } from 'react-icons/bi'
 import { BsThreeDots } from 'react-icons/bs'
-import { TiEdit } from 'react-icons/ti'
-import { BiTrash } from 'react-icons/bi'
 import DeleteModal from '../components/Modals/DeleteModal.js'
 import DropDownMenu from '../components/DropDownMenu.js'
 function PostCard({ post }) {

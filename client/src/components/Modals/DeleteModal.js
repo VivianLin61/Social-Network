@@ -41,7 +41,7 @@ function DeleteModal(props) {
       className='deleteModal'
     >
       <Modal.Body className='deletePostBody'>
-        <h4>Delete Comment</h4>
+        <h4>{title}</h4>
         <p>This cannot be undone and will be removed from your profile.</p>
       </Modal.Body>
       <Modal.Footer>

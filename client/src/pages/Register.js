@@ -23,7 +23,7 @@ function Register(props) {
       props.history.push('/')
     },
     onError(err) {
-      // (err.graphqlerrors[0].extensions.exception.errors)seterrors
+      setErrors(err.graphQLErrors[0].extensions.exception.errors)
     },
     variables: values,
   })
@@ -33,69 +33,76 @@ function Register(props) {
   }
 
   return (
-    <div style={{ marginTop: '10px' }} className='form-container'>
-      <Form onSubmit={onSubmit}>
-        <h1>Regsiter</h1>
+    <>
+      {' '}
+      {!loading ? (
+        <div style={{ marginTop: '10px' }} className='form-container'>
+          <Form onSubmit={onSubmit}>
+            <h1>Regsiter</h1>
 
-        <Form.Group>
-          <Form.Label>Username</Form.Label>
-          <Form.Control
-            type='username'
-            name='username'
-            placeholder='Enter Username'
-            value={values.username}
-            error={errors.username ? true : undefined}
-            onChange={onChange}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Email</Form.Label>
-          <Form.Control
-            type='email'
-            name='email'
-            placeholder='Enter Email'
-            value={values.email}
-            error={errors.email ? true : undefined}
-            onChange={onChange}
-          />
-        </Form.Group>
+            <Form.Group>
+              <Form.Label>Username</Form.Label>
+              <Form.Control
+                type='username'
+                name='username'
+                placeholder='Enter Username'
+                value={values.username}
+                error={errors.username ? true : undefined}
+                onChange={onChange}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Email</Form.Label>
+              <Form.Control
+                type='email'
+                name='email'
+                placeholder='Enter Email'
+                value={values.email}
+                error={errors.email ? true : undefined}
+                onChange={onChange}
+              />
+            </Form.Group>
 
-        <Form.Group>
-          <Form.Label>Password</Form.Label>
-          <Form.Control
-            type='password'
-            name='password'
-            placeholder='Password'
-            value={values.password}
-            error={errors.password ? true : undefined}
-            onChange={onChange}
-          />
-        </Form.Group>
-        <Form.Group>
-          <Form.Label>Confirm Password</Form.Label>
-          <Form.Control
-            type='confirmPassword'
-            name='confirmPassword'
-            placeholder='Confirm Password'
-            value={values.confirmPassword}
-            error={errors.confirmPassword ? true : undefined}
-            onChange={onChange}
-          />
-        </Form.Group>
-        <Button className='formSubmit' variant='primary' type='submit'>
-          Register
-        </Button>
-      </Form>
-      {Object.keys(errors).length > 0 && (
-        <div className='ui error message'>
-          <ul className='list'>
-            {Object.values(errors).map((value) => (
-              <li key={value}>{value}</li>
-            ))}
-          </ul>
+            <Form.Group>
+              <Form.Label>Password</Form.Label>
+              <Form.Control
+                type='password'
+                name='password'
+                placeholder='Password'
+                value={values.password}
+                error={errors.password ? true : undefined}
+                onChange={onChange}
+              />
+            </Form.Group>
+            <Form.Group>
+              <Form.Label>Confirm Password</Form.Label>
+              <Form.Control
+                type='password'
+                name='confirmPassword'
+                placeholder='Confirm Password'
+                value={values.confirmPassword}
+                error={errors.confirmPassword ? true : undefined}
+                onChange={onChange}
+              />
+            </Form.Group>
+            <Button className='formSubmit' variant='primary' type='submit'>
+              Register
+            </Button>
+          </Form>
+          {Object.keys(errors).length > 0 && (
+            <div className='ui error message'>
+              <ul className='list'>
+                {Object.values(errors).map((value) => (
+                  <li key={value}>{value}</li>
+                ))}
+              </ul>
+            </div>
+          )}
         </div>
+      ) : (
+        <div className='loader'>Loading...</div>
       )}
-    </div>
+    </>
   )
 }
 

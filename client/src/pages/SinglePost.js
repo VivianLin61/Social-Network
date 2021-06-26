@@ -39,7 +39,7 @@ function SinglePost(props) {
   if (!data) {
     postMarkup = <div className='loader'>Loading...</div>
   } else {
-    const { id, body, createdAt, username, comments } = data.getPost
+    const { body, createdAt, username, comments } = data.getPost
 
     postMarkup = (
       <>
@@ -107,11 +107,6 @@ function SinglePost(props) {
       </>
     )
   }
-  function updateComment() {}
-  function deletePostCallback() {
-    props.history.push('/')
-  }
-
   return <>{postMarkup}</>
 }
 

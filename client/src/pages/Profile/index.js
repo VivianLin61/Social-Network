@@ -16,7 +16,7 @@ function Profile() {
   const [username, setUsername] = useState(user ? user.username : '')
   const [email, setEmail] = useState(user ? user.email : '')
   const [errors, setErrors] = useState({})
-  const [changeUserInfo, { loading }] = useMutation(UPDATE_USER, {
+  const [changeUserInfo] = useMutation(UPDATE_USER, {
     update(_, { data: { updateUser: userData } }) {
       showUpdateModal(false)
       setShow(false)
@@ -35,12 +35,9 @@ function Profile() {
       _id: user ? user.id : '',
     },
   })
-  const [updateUserImage, { loading: loadPhoto }] = useMutation(
-    ADD_PROFILE_IMAGE,
-    {
-      onCompleted: (data) => context.updateUser(data.addProfileImage),
-    }
-  )
+  const [updateUserImage] = useMutation(ADD_PROFILE_IMAGE, {
+    onCompleted: (data) => context.updateUser(data.addProfileImage),
+  })
   function updateUser() {
     if (values.password && values.confirmPassword && values.currentPassword) {
       changeUserInfo()

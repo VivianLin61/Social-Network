@@ -1,5 +1,4 @@
 import React from 'react'
-import { BsThreeDots } from 'react-icons/bs'
 import { TiEdit } from 'react-icons/ti'
 import { BiTrash } from 'react-icons/bi'
 function DropDownMenu(props) {

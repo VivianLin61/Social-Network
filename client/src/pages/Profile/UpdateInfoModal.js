@@ -26,7 +26,7 @@ const UpdateInfoModal = (props) => {
     }
     if (
       props.type === 'Username' &&
-      document.getElementsByName('username')[0].value == ''
+      document.getElementsByName('username')[0].value === ''
     ) {
       setEmpty((prevEmpty) => ({
         ...prevEmpty,
