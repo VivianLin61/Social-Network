@@ -2,7 +2,73 @@ import React, { useState } from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import { Form } from 'react-bootstrap'
 import PopUpModal from './PopupModal.js'
+
 const UpdateInfoModal = (props) => {
+  let error
+  const [empty, setEmpty] = useState({
+    email: false,
+    username: false,
+    confirmPassword: false,
+    password: false,
+    currentPassword: false,
+  })
+
+  function onClickSubmit() {
+    if (
+      props.type === 'Email' &&
+      document.getElementsByName('email')[0].value === ''
+    ) {
+      setEmpty((prevEmpty) => ({
+        ...prevEmpty,
+        email: true,
+      }))
+      error = true
+    }
+    if (
+      props.type === 'Username' &&
+      document.getElementsByName('username')[0].value == ''
+    ) {
+      setEmpty((prevEmpty) => ({
+        ...prevEmpty,
+        username: true,
+      }))
+      error = true
+    }
+    if (
+      props.type === 'Password' &&
+      document.getElementsByName('confirmPassword')[0].value === ''
+    ) {
+      setEmpty((prevEmpty) => ({
+        ...prevEmpty,
+        confirmPassword: true,
+      }))
+      error = true
+    }
+    if (
+      props.type === 'Password' &&
+      document.getElementsByName('currentPassword')[0].value === ''
+    ) {
+      setEmpty((prevEmpty) => ({
+        ...prevEmpty,
+        currentPassword: true,
+      }))
+      error = true
+    }
+    if (
+      props.type === 'Password' &&
+      document.getElementsByName('password')[0].value === ''
+    ) {
+      setEmpty((prevEmpty) => ({
+        ...prevEmpty,
+        password: true,
+      }))
+      error = true
+    }
+    if (!error) {
+      props.setShow(true)
+    }
+  }
+
   return (
     <Modal
       {...props}
@@ -89,6 +155,21 @@ const UpdateInfoModal = (props) => {
           ) : (
             <> </>
           )}
+          {props.type === 'Username' && empty.username && (
+            <div className='modalError'>Fields must not be empty</div>
+          )}
+          {props.type === 'Email' && empty.email && (
+            <div className='modalError'>Email must not be empty</div>
+          )}
+          {props.type === 'Password' && empty.currentPassword && (
+            <div className='modalError'>Current Password must not be empty</div>
+          )}
+          {props.type === 'Password' && empty.password && (
+            <div className='modalError'>Password must not be empty</div>
+          )}
+          {props.type === 'Password' && empty.confirmPassword && (
+            <div className='modalError'>Confirm Password must not be empty</div>
+          )}
           <div className='footer'>
             <Button
               className={props.showPopup && 'disableButton'}
@@ -96,11 +177,7 @@ const UpdateInfoModal = (props) => {
             >
               Cancel
             </Button>
-            <Button
-              onClick={() => props.setShow(true)}
-              variant='primary'
-              type='submit'
-            >
+            <Button onClick={onClickSubmit} variant='primary' type='submit'>
               Submit
             </Button>
           </div>

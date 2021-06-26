@@ -16,6 +16,7 @@ function generateToken(user) {
       id: user.id,
       email: user.email,
       username: user.username,
+      profileImage: user.profileImage,
     },
     process.env.JWT_SECRET,
     { expiresIn: '1h' }

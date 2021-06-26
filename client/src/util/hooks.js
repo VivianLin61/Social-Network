@@ -11,10 +11,13 @@ export const useForm = (callback, initialState = {}) => {
     event.preventDefault()
     callback()
   }
-
+  const resetValues = () => {
+    setValues({})
+  }
   return {
     onChange,
     onSubmit,
+    resetValues,
     values,
   }
 }

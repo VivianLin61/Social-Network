@@ -12,7 +12,7 @@ function Profile() {
   const [profileImg, setProfileImg] = useState(user ? user.profileImage : '')
   const [updateModal, showUpdateModal] = useState(false)
   const [updateType, setUpdateType] = useState('')
-  const { onChange, onSubmit, values } = useForm(updateUser)
+  const { onChange, resetValues, onSubmit, values } = useForm(updateUser)
   const [username, setUsername] = useState(user ? user.username : '')
   const [email, setEmail] = useState(user ? user.email : '')
   const [errors, setErrors] = useState({})
@@ -23,9 +23,12 @@ function Profile() {
       setEmail(userData.email)
       setUsername(userData.username)
       context.updateUser(userData)
+      resetValues()
     },
     onError(err) {
-      console.log(err)
+      setErrors(err.graphQLErrors[0].extensions.exception.errors)
+      setShow(false)
+      resetValues()
     },
     variables: {
       ...values,
@@ -39,7 +42,11 @@ function Profile() {
     }
   )
   function updateUser() {
-    changeUserInfo()
+    if (values.password && values.confirmPassword && values.currentPassword) {
+      changeUserInfo()
+    } else if (values.username || values.email) {
+      changeUserInfo()
+    }
   }
   const imageHandler = (e) => {
     const file = e.target.files[0]
