@@ -6,6 +6,11 @@ import { ApolloProvider } from '@apollo/react-hooks'
 import { setContext } from 'apollo-link-context'
 import { createUploadLink } from 'apollo-upload-client'
 
+import { createStore, applyMiddleware } from 'redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import rootReducer from './reducers'
+import thunk from 'redux-thunk'
+import { Provider } from 'react-redux'
 const uploadLink = createUploadLink({
   uri: 'http://localhost:5000/graphql',
 })
@@ -24,8 +29,15 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 })
 
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk))
+)
+
 export default (
   <ApolloProvider client={client}>
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </ApolloProvider>
 )

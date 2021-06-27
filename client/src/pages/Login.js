@@ -1,14 +1,15 @@
 import React, { useContext, useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
-
+import { login } from '../actions'
 import { AuthContext } from '../context/auth.js'
 import { useForm } from '../util/hooks'
 import { Form, Button } from 'react-bootstrap'
-
+import { useDispatch, useSelector } from 'react-redux'
 function Login(props) {
   const context = useContext(AuthContext)
   const [errors, setErrors] = useState({})
+  const dispatch = useDispatch()
   const { onChange, onSubmit, values } = useForm(loginUserCallback, {
     username: '',
     email: '',
@@ -16,6 +17,7 @@ function Login(props) {
   const [loginUser, { loading }] = useMutation(LOGIN_USER, {
     update(_, { data: { login: userData } }) {
       context.login(userData)
+      dispatch(login(userData))
       props.history.push('/')
     },
     onError(err) {

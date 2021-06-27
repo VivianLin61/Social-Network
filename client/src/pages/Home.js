@@ -5,12 +5,18 @@ import { FETCH_POSTS_QUERY } from '../util/graphql'
 import PostCard from '../components/PostCard'
 import { Row, Col, InputGroup, FormControl } from 'react-bootstrap'
 import CreatePostModal from '../components/Modals/CreatePostModal.js'
+import { GET_USER } from '../util/graphql'
 function Home(props) {
   const { user } = useContext(AuthContext)
+  let userInfo = {}
   const { loading, data: { getPosts: posts } = {} } =
     useQuery(FETCH_POSTS_QUERY)
-  //If user show post form where user can post something
-  //Loads all the posts.
+  const { data: userData } = useQuery(GET_USER, {
+    variables: { userId: user ? user.id : '' },
+  })
+  if (userData) {
+    userInfo = userData.getUser
+  }
   const [modalShow, setModalShow] = React.useState(false)
   return (
     <>
@@ -32,14 +38,14 @@ function Home(props) {
                           marginTop: '0px',
                           width: '50px',
                         }}
-                        src={user.profileImage}
+                        src={userInfo.profileImage}
                         alt=''
                       />
                     </Col>
                     <Col xs={11}>
                       <InputGroup className='mb-3 createPostForm'>
                         <FormControl
-                          placeholder={`What's on your mind, ${user.username}?`}
+                          placeholder={`What's on your mind, ${userInfo.username}?`}
                           aria-label='createPostForm'
                           aria-describedby='basic-addon1'
                           onClick={() => setModalShow(true)}
@@ -61,7 +67,9 @@ function Home(props) {
         <div className='postsList'>
           <>
             {posts &&
-              posts.map((post, index) => <PostCard key={index} post={post} />)}
+              posts.map((post, index) => (
+                <PostCard key={index} post={post} userInfo={userInfo} />
+              ))}
           </>
         </div>
       )}

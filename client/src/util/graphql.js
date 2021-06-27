@@ -11,6 +11,7 @@ export const FETCH_POSTS_QUERY = gql`
       likes {
         username
       }
+      userId
       commentCount
       comments {
         id
@@ -18,6 +19,16 @@ export const FETCH_POSTS_QUERY = gql`
         createdAt
         body
       }
+    }
+  }
+`
+
+export const GET_USER = gql`
+  query GetUser($userId: ID!) {
+    getUser(userId: $userId) {
+      id
+      username
+      profileImage
     }
   }
 `

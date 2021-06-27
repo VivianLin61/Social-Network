@@ -2,9 +2,17 @@ import React, { useContext } from 'react'
 import { Nav } from 'react-bootstrap'
 import { AuthContext } from '../context/auth'
 import { Link } from 'react-router-dom'
+import { useQuery } from '@apollo/react-hooks'
+import { GET_USER } from '../util/graphql'
 function MenuBar() {
   const { user, logout } = useContext(AuthContext)
-
+  let userInfo = {}
+  const { data: userData } = useQuery(GET_USER, {
+    variables: { userId: user ? user.id : '' },
+  })
+  if (userData) {
+    userInfo = userData.getUser
+  }
   const menuBar = user ? (
     //show user name and logout
     <>
@@ -15,7 +23,9 @@ function MenuBar() {
 
         <div className='rightMenu'>
           <Nav.Item as='li'>
-            <Nav.Link href={`/profile/${user.id}`}>{user.username}</Nav.Link>
+            <Nav.Link href={`/profile/${user.id}`}>
+              {userInfo.username}
+            </Nav.Link>
           </Nav.Item>
           <Nav.Item as='li' onClick={logout}>
             <Link className='nav-link' to={`/login`}>

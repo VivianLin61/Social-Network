@@ -93,6 +93,7 @@ const CREATE_POST_MUTATION = gql`
       body
       createdAt
       username
+      userId
       likes {
         id
         username

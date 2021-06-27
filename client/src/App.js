@@ -1,13 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import { Container } from 'semantic-ui-react'
 
 import 'semantic-ui-css/semantic.min.css'
 import './App.css'
-
 import { AuthProvider } from './context/auth'
 import AuthRoute from './util/AuthRoute'
-
 import MenuBar from './components/MenuBar'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -15,7 +13,18 @@ import Register from './pages/Register'
 import SinglePost from './pages/SinglePost'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Profile from './pages/Profile/index.js'
+import { useDispatch, useSelector } from 'react-redux'
+import { isUserLoggedIn } from './actions'
+
 function App() {
+  const dispatch = useDispatch()
+  const auth = useSelector((state) => state.auth)
+  useEffect(() => {
+    console.log(auth.user)
+    if (auth.user == null) {
+      dispatch(isUserLoggedIn())
+    }
+  })
   return (
     <AuthProvider>
       <Router>
