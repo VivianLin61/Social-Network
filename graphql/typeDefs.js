@@ -14,7 +14,7 @@ module.exports = gql`
     likes: [Like]!
     likeCount: Int!
     commentCount: Int!
-    profileImage: String!
+    userId: String!
   }
   type Comment {
     id: ID!
@@ -44,6 +44,7 @@ module.exports = gql`
   type Query {
     getPosts: [Post]
     getPost(postId: ID!): Post!
+    getUser(userId: ID!): User!
   }
 
   type Mutation {

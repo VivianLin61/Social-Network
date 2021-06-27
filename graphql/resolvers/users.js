@@ -24,6 +24,15 @@ function generateToken(user) {
 }
 
 module.exports = {
+  Query: {
+    async getUser(_, args) {
+      const { userId } = args
+      const objectId = new ObjectId(userId)
+      const user = await User.findOne({ _id: objectId })
+      return user
+    },
+  },
+
   Mutation: {
     async login(_, { email, password }) {
       const { errors, valid } = validateLoginInput(email, password)

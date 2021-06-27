@@ -35,7 +35,7 @@ module.exports = {
 
       const newPost = new Post({
         body,
-        user: user.id,
+        userId: user.id,
         username: user.username,
         createdAt: new Date().toISOString(),
         profileImage: user.profileImage,

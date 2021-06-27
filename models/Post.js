@@ -4,7 +4,6 @@ const postSchema = new Schema({
   body: String,
   username: String,
   createdAt: String,
-  profileImage: String,
   comments: [
     {
       body: String,
@@ -18,7 +17,7 @@ const postSchema = new Schema({
       createdAt: String,
     },
   ],
-  user: {
+  userId: {
     type: Schema.Types.ObjectId,
     ref: 'users',
   },
