@@ -16,6 +16,14 @@ module.exports = gql`
     commentCount: Int!
     userId: String!
   }
+  type PostNotification {
+    id: ID!
+    createdAt: String!
+    userId: String!
+    postId: String!
+    message: String!
+    read: Boolean!
+  }
   type Comment {
     id: ID!
     createdAt: String!
@@ -45,6 +53,7 @@ module.exports = gql`
     getPosts: [Post]
     getPost(postId: ID!): Post!
     getUser(userId: ID!): User!
+    getNotifications: String!
   }
 
   type Mutation {
@@ -64,5 +73,10 @@ module.exports = gql`
     deleteComment(postId: ID!, commentId: ID!): Post!
     likePost(postId: ID!): Post!
     addProfileImage(_id: String!, file: FileUpload!): User!
+    createPostNotification(
+      message: String!
+      postId: String!
+      userId: String!
+    ): PostNotification!
   }
 `
