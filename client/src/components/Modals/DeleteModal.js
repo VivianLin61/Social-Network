@@ -1,13 +1,16 @@
-import React from 'react'
+import React, { useState } from 'react'
 import gql from 'graphql-tag'
 import { useMutation } from '@apollo/react-hooks'
 import { FETCH_POSTS_QUERY } from '../../util/graphql.js'
 import { Modal, Button } from 'react-bootstrap'
+import PopupModal from '../PopupModal.js'
+
 function DeleteModal(props) {
   const mutation = props.comment_id
     ? DELETE_COMMENT_MUTATION
     : DELETE_POST_MUTATION
   const title = props.comment_id ? 'Delete Comment' : 'Delete Post'
+  const [popup, setPopup] = useState(false)
   const [deletePostOrMutation] = useMutation(mutation, {
     update(proxy) {
       props.onHide()
@@ -32,6 +35,15 @@ function DeleteModal(props) {
       commentId: props.comment_id,
     },
   })
+
+  function onDelete() {
+    setPopup(true)
+    deletePostOrMutation()
+  }
+
+  function handleClosePopup() {
+    setPopup(false)
+  }
   return (
     <Modal
       {...props}
@@ -46,8 +58,13 @@ function DeleteModal(props) {
       </Modal.Body>
       <Modal.Footer>
         <Button onClick={props.onHide}>Close</Button>
-        <Button onClick={deletePostOrMutation}>Delete</Button>
+        <Button onClick={onDelete}>Delete</Button>
       </Modal.Footer>
+      <PopupModal
+        title='Deleting...'
+        show={popup}
+        handleClosePopup={handleClosePopup}
+      ></PopupModal>
     </Modal>
   )
 }

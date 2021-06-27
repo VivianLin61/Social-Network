@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { Modal, Button } from 'react-bootstrap'
 import { Form } from 'react-bootstrap'
-import PopUpModal from './PopupModal.js'
+import PopupModal from '../../components/PopupModal.js'
 
 const UpdateInfoModal = (props) => {
   let error
@@ -65,7 +65,7 @@ const UpdateInfoModal = (props) => {
       error = true
     }
     if (!error) {
-      props.setShow(true)
+      props.onShow(true)
     }
   }
 
@@ -183,7 +183,11 @@ const UpdateInfoModal = (props) => {
           </div>
         </Form>
       </Modal.Body>{' '}
-      <PopUpModal show={props.popup} handleClose={props.handleClosePopup} />
+      <PopupModal
+        title='Updating...'
+        show={props.popup}
+        handleClose={props.handleClosePopup}
+      />
     </Modal>
   )
 }

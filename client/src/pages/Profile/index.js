@@ -117,8 +117,8 @@ function Profile() {
             onSubmit={onSubmit}
             values={values}
             errors={errors}
-            popup={show}
-            setShow={setShow}
+            popup={show ? true : undefined}
+            onShow={setShow}
           />
         </div>
       ) : (

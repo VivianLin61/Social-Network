@@ -9,7 +9,7 @@ function PopupModal(props) {
         onHide={props.handleClose}
       >
         <Modal.Header>
-          <Modal.Title>Updating...</Modal.Title>
+          <Modal.Title>{props.title}</Modal.Title>
         </Modal.Header>
       </Modal>
     </>
