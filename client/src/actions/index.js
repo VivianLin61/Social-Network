@@ -5,7 +5,11 @@ export const login = (userData) => {
     dispatch({
       type: 'LOGIN',
       payload: {
-        userData,
+        email: userData.email,
+        id: userData.id,
+        profileImage: userData.profileImage,
+        token: userData.token,
+        username: userData.username,
       },
     })
   }
@@ -25,7 +29,13 @@ export const updateUser = (userData) => {
   return async (dispatch) => {
     dispatch({
       type: 'UPDATE_USER',
-      payload: userData,
+      payload: {
+        email: userData.email,
+        id: userData.id,
+        profileImage: userData.profileImage,
+        token: userData.token,
+        username: userData.username,
+      },
     })
   }
 }
@@ -37,9 +47,7 @@ export const isUserLoggedIn = () => {
       const user = JSON.parse(localStorage.getItem('user'))
       dispatch({
         type: 'LOGIN',
-        payload: {
-          user,
-        },
+        payload: user,
       })
     }
   }

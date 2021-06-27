@@ -1,15 +1,15 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { Form, Button } from 'react-bootstrap'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
-
-import { AuthContext } from '../context/auth'
+import { login } from '../actions'
 import { useForm } from '../util/hooks'
+import { useDispatch } from 'react-redux'
 
 function Register(props) {
-  const context = useContext(AuthContext)
   const [errors, setErrors] = useState({})
 
+  const dispatch = useDispatch()
   const { onChange, onSubmit, values } = useForm(registerUser, {
     username: '',
     email: '',
@@ -19,7 +19,8 @@ function Register(props) {
 
   const [addUser, { loading }] = useMutation(REGISTER_USER, {
     update(_, { data: { register: userData } }) {
-      context.login(userData)
+      dispatch(login(userData))
+
       props.history.push('/')
     },
     onError(err) {

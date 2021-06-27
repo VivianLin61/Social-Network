@@ -1,7 +1,6 @@
-import React, { useContext, useState } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import moment from 'moment'
-import { AuthContext } from '../context/auth'
 import LikeButton from './LikeButton.js'
 import { Row, Col } from 'react-bootstrap'
 import { BiCommentDots } from 'react-icons/bi'
@@ -23,12 +22,10 @@ function PostCard({ post, userInfo }) {
   } = post
   let postUser = {}
 
-  const { user } = useContext(AuthContext)
-
   const [open, setOpen] = useState(false)
   const [showDeleteModal, setShowDeleteModal] = useState(false)
 
-  const { loading, error, data } = useQuery(GET_USER, {
+  const { data } = useQuery(GET_USER, {
     variables: { userId: userId },
   })
 

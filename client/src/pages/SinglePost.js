@@ -1,12 +1,13 @@
-import React, { useContext, useState, useRef } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import gql from 'graphql-tag'
 import { useQuery, useMutation } from '@apollo/react-hooks'
 import moment from 'moment'
 import { Row, Col, FormControl, InputGroup, Button } from 'react-bootstrap'
-import { AuthContext } from '../context/auth'
 import CommentCard from '../components/CommentCard.js'
+import { useSelector } from 'react-redux'
 function SinglePost(props) {
   const postId = props.match.params.postId
+  const auth = useSelector((state) => state.auth.user)
   const [comment, setComment] = useState('')
   const commentInputRef = useRef(null)
   const [submitComment] = useMutation(SUBMIT_COMMENT_MUTATION, {
@@ -20,9 +21,15 @@ function SinglePost(props) {
       body: comment,
     },
   })
+  useEffect(() => {
+    if (auth) {
+      setUser(auth)
+    } else {
+      setUser(null)
+    }
+  }, [auth])
 
-  const { user } = useContext(AuthContext)
-
+  const [user, setUser] = useState({})
   const { data, error } = useQuery(FETCH_POST_QUERY, {
     onError(error) {
       console.log(error)

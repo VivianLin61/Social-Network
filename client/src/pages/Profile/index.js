@@ -1,5 +1,4 @@
-import React, { useContext, useState, useEffect } from 'react'
-import { AuthContext } from '../../context/auth'
+import React, { useState, useEffect } from 'react'
 import UpdateInfo from './UpdateInfo.js'
 import UpdateInfoModal from './UpdateInfoModal.js'
 import { useMutation } from '@apollo/react-hooks'
@@ -8,14 +7,12 @@ import { gql } from '@apollo/client'
 import { useForm } from '../../util/hooks'
 import { useDispatch, useSelector } from 'react-redux'
 function Profile() {
-  const { user } = useContext(AuthContext)
-  const context = useContext(AuthContext)
-
   const auth = useSelector((state) => state.auth.user)
   const [show, setShow] = useState(false)
   const [profileImg, setProfileImg] = useState('')
   const dispatch = useDispatch()
   const [updateModal, showUpdateModal] = useState(false)
+  const [user, setUser] = useState({})
   const [updateType, setUpdateType] = useState('')
   const { onChange, resetValues, onSubmit, values } = useForm(updateUserInfo)
   const [username, setUsername] = useState('')
@@ -42,14 +39,14 @@ function Profile() {
   })
   useEffect(() => {
     if (auth) {
-      setProfileImg(auth.user.profileImage)
-      setUsername(auth.user.username)
-      setEmail(auth.user.email)
+      setProfileImg(auth.profileImage)
+      setUsername(auth.username)
+      setEmail(auth.email)
+      setUser(auth)
     }
   }, [auth])
-  //usecontext update user with new user data at a start
   const [updateUserImage] = useMutation(ADD_PROFILE_IMAGE, {
-    onCompleted: (data) => context.updateUser(data.addProfileImage),
+    onCompleted: (data) => dispatch(updateUser(data.addProfileImage)),
   })
   function updateUserInfo() {
     if (values.password && values.confirmPassword && values.currentPassword) {
