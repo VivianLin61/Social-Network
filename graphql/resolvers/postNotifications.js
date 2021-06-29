@@ -5,10 +5,12 @@ module.exports = {
     async getNotifications(_, { userId }) {
       try {
         const notifications = await PostNotification.find({ userId })
+        if (notifications) {
+          return notifications
+        }
       } catch (err) {
         throw new Error(err)
       }
-      return 'get notifications'
     },
   },
   Mutation: {
@@ -18,11 +20,12 @@ module.exports = {
         message,
         postId,
         userId,
-        createdAt: new Data().toISOString(),
+        createdAt: new Date().toISOString(),
         read: false,
+        active: false,
       })
-
       const notification = await newNotification.save()
+      // // console.log(newNotification)
 
       return notification
     },

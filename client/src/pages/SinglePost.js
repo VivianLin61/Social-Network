@@ -5,20 +5,32 @@ import moment from 'moment'
 import { Row, Col, FormControl, InputGroup, Button } from 'react-bootstrap'
 import CommentCard from '../components/CommentCard.js'
 import { useSelector } from 'react-redux'
+import { CREATE_NOTIFICATION } from '../util/graphql.js'
 function SinglePost(props) {
   const postId = props.match.params.postId
   const auth = useSelector((state) => state.auth.user)
+  const [user, setUser] = useState(null)
   const [comment, setComment] = useState('')
   const commentInputRef = useRef(null)
   const [submitComment] = useMutation(SUBMIT_COMMENT_MUTATION, {
     update() {
       setComment('')
-
+      createCommentNotification()
       commentInputRef.current.blur()
     },
     variables: {
       postId,
       body: comment,
+    },
+  })
+  const [createCommentNotification] = useMutation(CREATE_NOTIFICATION, {
+    variables: {
+      message: user ? `${user.username} commented on your post` : '',
+      postId: postId,
+      userId: user ? user.id : '',
+    },
+    onError(err) {
+      console.log(err)
     },
   })
   useEffect(() => {
@@ -29,7 +41,6 @@ function SinglePost(props) {
     }
   }, [auth])
 
-  const [user, setUser] = useState({})
   const { data, error } = useQuery(FETCH_POST_QUERY, {
     onError(error) {
       console.log(error)

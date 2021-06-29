@@ -7,7 +7,6 @@ function DropDownMenu(props) {
   }
 
   function handleDelete() {
-    console.log('delete')
     props.setShowDeleteModal(true)
     props.setOpen(false)
   }

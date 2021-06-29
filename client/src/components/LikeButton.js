@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useMutation } from '@apollo/react-hooks'
 import gql from 'graphql-tag'
 import { FcLikePlaceholder, FcLike } from 'react-icons/fc'
+import { CREATE_NOTIFICATION } from '../util/graphql.js'
 function LikeButton({ user, post: { id, likeCount, likes } }) {
   const [liked, setLiked] = useState(false)
 
@@ -13,11 +14,28 @@ function LikeButton({ user, post: { id, likeCount, likes } }) {
 
   const [likePost] = useMutation(LIKE_POST_MUTATION, {
     variables: { postId: id },
+    onCompleted: () => {
+      if (!liked) {
+        //Only create notification when user has liked
+        createLikeNotification()
+      }
+    },
+  })
+
+  const [createLikeNotification] = useMutation(CREATE_NOTIFICATION, {
+    variables: {
+      message: user ? `${user.username} liked your post` : '',
+      postId: id,
+      userId: user ? user.id : '',
+    },
+    onError(err) {
+      console.log(err)
+    },
   })
 
   const likeButton = user ? (
     liked ? (
-      <button className='likeButton'>
+      <button className='likedButton'>
         <FcLike onClick={likePost} style={{ fontSize: '20px' }} />
       </button>
     ) : (
@@ -56,5 +74,4 @@ const LIKE_POST_MUTATION = gql`
     }
   }
 `
-
 export default LikeButton

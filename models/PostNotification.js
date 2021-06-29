@@ -6,6 +6,7 @@ const postNotificationSchema = new Schema({
   postId: String, //The post that triggered the notification
   createdAt: String,
   userId: String, //User who will recieve the notification
+  active: Boolean, //If the user has clicked on the notifcation
 })
 
 module.exports = model('PostNotification', postNotificationSchema)

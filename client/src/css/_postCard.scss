@@ -143,10 +143,28 @@
   border: none;
   margin-top: -5px;
 }
-
+.likedButton {
+  background: none;
+  border: none;
+}
 .likeButton {
   background: none;
   border: none;
+  path {
+    fill: none;
+    stroke: red;
+    stroke-width: 3px;
+    stroke-linejoin: round;
+  }
+}
+
+.likeButton:hover {
+  border: none;
+  background: none;
+
+  path {
+    fill: rgba(250, 150, 133, 0.842);
+  }
 }
 .submitComment {
   padding-top: 10px !important;

@@ -137,8 +137,15 @@ module.exports = {
         console.log(errors)
         throw new UserInputError('Errors', { errors })
       }
-      let updated
       if (username) {
+        const user = await User.findOne({ username })
+        if (user) {
+          throw new UserInputError('Username is taken', {
+            errors: {
+              username: 'This username is taken',
+            },
+          })
+        }
         updated = await User.updateOne(
           { _id: objectId },
           { $set: { username: username } }
@@ -148,8 +155,16 @@ module.exports = {
         updated = await User.updateOne(
           { _id: objectId },
           { $set: { password: pWord } }
-        )
+        ) 
       } else if (email) {
+        const user = await User.findOne({ email })
+        if (user) {
+          throw new UserInputError('Email already exists', {
+            errors: {
+              email: 'Email already exists',
+            },
+          })
+        }
         updated = await User.updateOne(
           { _id: objectId },
           { $set: { email: email } }

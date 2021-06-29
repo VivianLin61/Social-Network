@@ -23,6 +23,7 @@ module.exports = gql`
     postId: String!
     message: String!
     read: Boolean!
+    active: Boolean!
   }
   type Comment {
     id: ID!
@@ -53,7 +54,7 @@ module.exports = gql`
     getPosts: [Post]
     getPost(postId: ID!): Post!
     getUser(userId: ID!): User!
-    getNotifications: String!
+    getNotifications(userId: String!): [PostNotification]
   }
 
   type Mutation {
@@ -73,7 +74,7 @@ module.exports = gql`
     deleteComment(postId: ID!, commentId: ID!): Post!
     likePost(postId: ID!): Post!
     addProfileImage(_id: String!, file: FileUpload!): User!
-    createPostNotification(
+    createNotification(
       message: String!
       postId: String!
       userId: String!
