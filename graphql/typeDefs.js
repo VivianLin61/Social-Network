@@ -79,5 +79,7 @@ module.exports = gql`
       postId: String!
       userId: String!
     ): PostNotification!
+    updateNotification(id: ID!): PostNotification!
+    deleteNotification(id: ID!): String!
   }
 `

@@ -67,7 +67,10 @@ function PostCard({ post, userInfo }) {
                   <BiCommentDots style={{ fontSize: '22px' }} />
                 </Link>
                 <span className='commentAndLikeCount'>{commentCount}</span>
-                <LikeButton user={userInfo} post={{ id, likes, likeCount }} />
+                <LikeButton
+                  user={userInfo}
+                  post={{ id, likes, userId, likeCount }}
+                />
               </Col>
             </Row>
           </Col>

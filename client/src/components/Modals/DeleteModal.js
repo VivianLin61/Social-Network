@@ -9,12 +9,16 @@ function DeleteModal(props) {
   const mutation = props.comment_id
     ? DELETE_COMMENT_MUTATION
     : DELETE_POST_MUTATION
-  const title = props.comment_id ? 'Delete Comment' : 'Delete Post'
+  const title = props.comment_id
+    ? 'Delete Comment'
+    : props.post_id
+    ? 'Delete Post'
+    : 'Delete Notification'
   const [popup, setPopup] = useState(false)
   const [deletePostOrMutation] = useMutation(mutation, {
     update(proxy) {
       props.onHide()
-      if (!props.comment_id) {
+      if (props.post_id) {
         const data = proxy.readQuery({
           query: FETCH_POSTS_QUERY,
         })

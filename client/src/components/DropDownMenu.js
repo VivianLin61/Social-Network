@@ -1,14 +1,21 @@
 import React from 'react'
 import { TiEdit } from 'react-icons/ti'
-import { BiTrash } from 'react-icons/bi'
+import { BiTrash, BiCheck } from 'react-icons/bi'
 function DropDownMenu(props) {
   function handleEdit() {
-    console.log('edit')
+    if (props.notification) {
+      console.log('mark read')
+      props.updateNotification()
+    }
   }
 
   function handleDelete() {
-    props.setShowDeleteModal(true)
-    props.setOpen(false)
+    if (!props.notification) {
+      props.setShowDeleteModal(true)
+      props.setOpen(false)
+    } else {
+      props.deleteNotification()
+    }
   }
   console.log('open')
   function DropdownItem(props) {
@@ -21,11 +28,20 @@ function DropDownMenu(props) {
   }
 
   return (
-    <div className='dropdown'>
+    <div className={props.notification ? 'notification dropdown' : 'dropdown'}>
       <div className='square'></div>
       <DropdownItem handleDropdown={handleEdit}>
-        <TiEdit />
-        <span>Edit</span>
+        {props.notification ? (
+          <>
+            <BiCheck />
+            <span>Mark Read</span>
+          </>
+        ) : (
+          <>
+            <TiEdit />
+            <span>Edit</span>
+          </>
+        )}
       </DropdownItem>
       <DropdownItem handleDropdown={handleDelete}>
         <BiTrash />

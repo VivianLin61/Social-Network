@@ -12,6 +12,7 @@ function SinglePost(props) {
   const [user, setUser] = useState(null)
   const [comment, setComment] = useState('')
   const commentInputRef = useRef(null)
+  let postInfo = {}
   const [submitComment] = useMutation(SUBMIT_COMMENT_MUTATION, {
     update() {
       setComment('')
@@ -21,16 +22,6 @@ function SinglePost(props) {
     variables: {
       postId,
       body: comment,
-    },
-  })
-  const [createCommentNotification] = useMutation(CREATE_NOTIFICATION, {
-    variables: {
-      message: user ? `${user.username} commented on your post` : '',
-      postId: postId,
-      userId: user ? user.id : '',
-    },
-    onError(err) {
-      console.log(err)
     },
   })
   useEffect(() => {
@@ -50,7 +41,6 @@ function SinglePost(props) {
 
   if (error) {
     console.log(error)
-    return 'error'
   }
 
   let postMarkup
@@ -58,13 +48,13 @@ function SinglePost(props) {
     postMarkup = <div className='loader'>Loading...</div>
   } else {
     const { body, createdAt, username, comments } = data.getPost
-
+    postInfo = data.getPost
     postMarkup = (
       <>
         <div className='singlePostContainer'>
           <Row>
             <Col xs={2}>
-              <img src={user.profileImage} alt='' />
+              <img src={user ? user.profileImage : ''} alt='' />
             </Col>
             <Col xs={10}>
               <Row xs={2} className='justify-content-md-center postBody'>
@@ -125,6 +115,16 @@ function SinglePost(props) {
       </>
     )
   }
+  const [createCommentNotification] = useMutation(CREATE_NOTIFICATION, {
+    variables: {
+      message: user ? `${user.username} commented on your post` : '',
+      postId: postId,
+      userId: postInfo.userId,
+    },
+    onError(err) {
+      console.log(err)
+    },
+  })
   return <>{postMarkup}</>
 }
 
@@ -148,6 +148,7 @@ const FETCH_POST_QUERY = gql`
     getPost(postId: $postId) {
       id
       body
+      userId
       createdAt
       username
       likeCount

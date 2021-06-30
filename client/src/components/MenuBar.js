@@ -1,24 +1,29 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { Nav } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import { useQuery } from '@apollo/react-hooks'
+import { useQuery, useMutation } from '@apollo/react-hooks'
 import { logout } from '../actions'
 import { IoNotifications } from 'react-icons/io5'
-import { GET_NOTIFICATIONS_QUERY } from '../util/graphql.js'
-import { Modal, Button } from 'react-bootstrap'
-import moment from 'moment'
+import {
+  GET_NOTIFICATIONS_QUERY,
+  UPDATE_NOTIFICATION,
+} from '../util/graphql.js'
+
+import NotificationCard from './NotificationCard.js'
 function MenuBar() {
   const [user, setUser] = useState(null)
   const [show, setShow] = useState(false)
+  const [menu, showMenu] = useState(false)
+  const node = useRef()
 
   const handleClose = () => setShow(false)
-  const handleShow = () => setShow(!show)
-
+  const handleShow = () => setShow(true)
+  let notificationsLength = 0
   let notifications = null
   const dispatch = useDispatch()
   const auth = useSelector((state) => state.auth.user)
-  const { data } = useQuery(GET_NOTIFICATIONS_QUERY, {
+  const { data, refetch } = useQuery(GET_NOTIFICATIONS_QUERY, {
     variables: { userId: user ? user.id : '' },
   })
   useEffect(() => {
@@ -31,8 +36,35 @@ function MenuBar() {
       modalContainer.classList.remove('display')
     }
   }, [show])
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClick)
+
+    return () => {
+      document.removeEventListener('mousedown', handleClick)
+    }
+  })
+  const handleClick = (e) => {
+    if (node.current) {
+      if (node.current.contains(e.target)) {
+        // inside click
+        return
+      }
+    }
+    // outside click
+    handleClose()
+  }
+
   if (data) {
     notifications = data.getNotifications
+    let unRead = data.getNotifications.filter(
+      (notification) => notification.read === false
+    )
+    notificationsLength = unRead.length
+  }
+  const notificationMenu = (e) => {
+    handleShow()
+    showMenu(true)
+    console.log('menu')
   }
   useEffect(() => {
     if (auth) {
@@ -43,7 +75,16 @@ function MenuBar() {
   }, [auth])
   const showNotifications = () => {
     handleShow()
-    console.log(notifications)
+  }
+  const [updateNotification] = useMutation(UPDATE_NOTIFICATION, {
+    onCompleted: () => {
+      refetch()
+    },
+  })
+
+  const deactivateNotification = (id) => {
+    updateNotification({ variables: { id: id } })
+    handleClose()
   }
   const menuBar =
     user != null ? (
@@ -60,9 +101,9 @@ function MenuBar() {
                   <IoNotifications />
                 </button>
 
-                {notifications && notifications.length > 0 && (
+                {notifications && notificationsLength > 0 && (
                   <span className='notificationCount'>
-                    {notifications.length}
+                    {notificationsLength}
                   </span>
                 )}
               </div>
@@ -81,22 +122,18 @@ function MenuBar() {
               </Link>
             </Nav.Item>
           </div>
-          <div className='notificationModal'>
+          <div ref={node} className='notificationModal'>
             <h1>Notifications</h1>
             {notifications &&
               notifications.map((notification, index) => (
-                <Link
-                  to={`/posts/${notification.postId}`}
+                <NotificationCard
                   key={index}
-                  className='notificationCard'
-                >
-                  <div style={{ padding: '5px' }}>
-                    <div>{notification.message}</div>
-                    <span>
-                      {moment(notification.createdAt).fromNow(true) + ' ago'}
-                    </span>
-                  </div>
-                </Link>
+                  deactivateNotification={deactivateNotification}
+                  notificationMenu={notificationMenu}
+                  menu={menu}
+                  notification={notification}
+                  userId={user ? user.id : ''}
+                />
               ))}
           </div>
         </Nav>

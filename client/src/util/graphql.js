@@ -31,6 +31,7 @@ export const GET_NOTIFICATIONS_QUERY = gql`
       postId
       userId
       createdAt
+      read
     }
   }
 `
@@ -52,6 +53,25 @@ export const CREATE_NOTIFICATION = gql`
   ) {
     createNotification(postId: $postId, message: $message, userId: $userId) {
       id
+      message
+      postId
+      userId
+      createdAt
+      read
     }
+  }
+`
+
+export const UPDATE_NOTIFICATION = gql`
+  mutation UpdateNotification($id: ID!) {
+    updateNotification(id: $id) {
+      id
+    }
+  }
+`
+
+export const DELETE_NOTIFICATION = gql`
+  mutation DeleteNotification($id: ID!) {
+    deleteNotification(id: $id)
   }
 `

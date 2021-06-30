@@ -5,6 +5,7 @@
 @import './menuBar';
 @import './profile';
 @import './updateInfoModal';
+@import './notificationCard';
 h1 {
   font-weight: bold;
 }
@@ -72,4 +73,29 @@ body {
   40% {
     box-shadow: 0 2.5em 0 0;
   }
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 20px;
+  border-radius: 10px;
+  // border-radius: 14px;
+  // color: blue;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  // background: #f1f1f1;
+  border-radius: 10px !important;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  // background: #888;
+  border-radius: 10px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  // background: #555;
 }
