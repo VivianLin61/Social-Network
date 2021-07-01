@@ -15,12 +15,7 @@ function CommentCard(props) {
       {' '}
       <Row>
         <Col xs={1}>
-          <img
-            size='small'
-            src='https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_960_720.png'
-            float='right'
-            alt='none'
-          />
+          <img size='small' src={comment.image} float='right' alt='none' />
         </Col>
         <Col xs={11}>
           <Row className='commentBody'>

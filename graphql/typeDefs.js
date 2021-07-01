@@ -30,6 +30,7 @@ module.exports = gql`
     createdAt: String!
     username: String!
     body: String!
+    image: String!
   }
   type Like {
     id: ID!
@@ -70,7 +71,7 @@ module.exports = gql`
     ): User!
     createPost(body: String): Post!
     deletePost(postId: ID!): String!
-    createComment(postId: String!, body: String!): Post!
+    createComment(commenterId: String!, postId: String!, body: String!): Post!
     deleteComment(postId: ID!, commentId: ID!): Post!
     likePost(postId: ID!): Post!
     addProfileImage(_id: String!, file: FileUpload!): User!
