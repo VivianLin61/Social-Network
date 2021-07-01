@@ -43,6 +43,12 @@ function MenuBar() {
       document.removeEventListener('mousedown', handleClick)
     }
   })
+  useEffect(() => {
+    console.log(notificationsLength)
+    if (notificationsLength === 0) {
+      showMenu(false)
+    }
+  }, [notificationsLength])
   const handleClick = (e) => {
     if (node.current) {
       if (node.current.contains(e.target)) {

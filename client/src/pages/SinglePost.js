@@ -160,6 +160,7 @@ const SUBMIT_COMMENT_MUTATION = gql`
         body
         createdAt
         username
+        image
       }
       commentCount
     }
