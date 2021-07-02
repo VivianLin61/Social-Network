@@ -15,7 +15,7 @@ A twitter like social media website where users and create and comment on posts.
 
 ## Project Demo
 
-![U7BBv9jOtM](https://user-images.githubusercontent.com/33815743/124297165-c712b980-db28-11eb-95f6-ca42a5061652.gif)
+https://user-images.githubusercontent.com/33815743/124297869-8ff0d800-db29-11eb-868d-59dd6197399b.mp4
 
 
 ## Installation
