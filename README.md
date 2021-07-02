@@ -7,8 +7,11 @@ A twitter like social media website where users and create and comment on posts.
 ## Features
 
 1. Users can sign in and create an account.
-2. Users can like and comment on other people's posts.
-3. Users can create and delete their own posts.
+2. Users can like and unlike on other people's posts.
+3. Users can comment and delete their own comments.
+4. Users can create and delete their own posts.
+5. Users can update account profile image, name email and password.
+6. Users can recieve notifications on their posts.
 
 ## Project Demo
 
