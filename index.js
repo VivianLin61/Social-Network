@@ -5,6 +5,7 @@ const express = require('express')
 const typeDefs = require('./graphql/typeDefs')
 const resolvers = require('./graphql/resolvers')
 const { graphqlUploadExpress } = require('graphql-upload')
+const path = require('path')
 const PORT = process.env.port || 5000
 const cors = require('cors')
 env.config()
