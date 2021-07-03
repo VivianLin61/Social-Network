@@ -187,7 +187,7 @@ module.exports = {
       root.splice(root.length - 2, 2)
       root = root.join('/')
       const location = path.join(root, `/public/images/${filename}`)
-      
+
       const url = `http://localhost:5000/images/${filename}`,
         myfile = createReadStream()
       const updated = await User.updateOne(
