@@ -178,11 +178,16 @@ module.exports = {
       const { _id } = args.req.body.variables
       const objectId = new ObjectId(_id)
       const { createReadStream, filename, mimetype } = await file
-      const location = path.join(
-        '/Users/vivian/Desktop/Social-Network',
-        `/public/images/${filename}`
-      )
-
+      // const location = path.join(
+      //   '/Users/vivian/Desktop/Social-Network',
+      //   `/public/images/${filename}`
+      // )
+      let root = __dirname
+      root = root.split('/')
+      root.splice(root.length - 2, 2)
+      root = root.join('/')
+      const location = path.join(root, `/public/images/${filename}`)
+      
       const url = `http://localhost:5000/images/${filename}`,
         myfile = createReadStream()
       const updated = await User.updateOne(
