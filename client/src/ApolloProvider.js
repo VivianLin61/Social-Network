@@ -12,8 +12,8 @@ import rootReducer from './reducers'
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 const uploadLink = createUploadLink({
-  // uri: 'http://localhost:5000/graphql',
-  uri: 'graphql',
+  uri: 'http://localhost:5000/graphql',
+  // uri: 'graphql',
 })
 
 const authLink = setContext(() => {
