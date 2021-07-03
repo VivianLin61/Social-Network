@@ -144,8 +144,11 @@
   margin-top: -5px;
 }
 .likedButton {
-  background: none;
+  background-color: white;
   border: none;
+  svg {
+    color: red;
+  }
 }
 .likeButton {
   background: none;

@@ -10,12 +10,14 @@ const postSchema = new Schema({
       username: String,
       createdAt: String,
       image: String,
+      userId: String,
     },
   ],
   likes: [
     {
       username: String,
       createdAt: String,
+      userId: String,
     },
   ],
   userId: {

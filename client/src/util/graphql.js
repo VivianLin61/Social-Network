@@ -10,6 +10,7 @@ export const FETCH_POSTS_QUERY = gql`
       likeCount
       likes {
         username
+        userId
       }
       userId
       commentCount
@@ -18,6 +19,7 @@ export const FETCH_POSTS_QUERY = gql`
         username
         createdAt
         body
+        userId
       }
     }
   }

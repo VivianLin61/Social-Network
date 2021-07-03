@@ -44,7 +44,6 @@ function MenuBar() {
     }
   })
   useEffect(() => {
-    console.log(notificationsLength)
     if (notificationsLength === 0) {
       showMenu(false)
     }
@@ -70,7 +69,6 @@ function MenuBar() {
   const notificationMenu = (e) => {
     handleShow()
     showMenu(true)
-    console.log('menu')
   }
   useEffect(() => {
     if (auth) {
@@ -97,7 +95,7 @@ function MenuBar() {
       <>
         <Nav defaultActiveKey='/' as='ul' className='loggedInNavBar'>
           <Nav.Item as='li'>
-            <Nav.Link href='/'>Social</Nav.Link>
+            <Nav.Link href='/'>Social Network</Nav.Link>
           </Nav.Item>
 
           <div className='rightMenu'>
@@ -148,7 +146,7 @@ function MenuBar() {
       //login register
       <Nav defaultActiveKey='/' as='ul' className='loggedInNavBar'>
         <Nav.Item as='li'>
-          <Nav.Link href='/'>Social</Nav.Link>
+          <Nav.Link href='/'>Social Network</Nav.Link>
         </Nav.Item>
         <div className='rightMenu'>
           <Nav.Item name='login' as='li'>

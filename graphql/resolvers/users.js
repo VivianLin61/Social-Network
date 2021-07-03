@@ -155,7 +155,7 @@ module.exports = {
         updated = await User.updateOne(
           { _id: objectId },
           { $set: { password: pWord } }
-        ) 
+        )
       } else if (email) {
         const user = await User.findOne({ email })
         if (user) {

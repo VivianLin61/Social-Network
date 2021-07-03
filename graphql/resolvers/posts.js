@@ -47,10 +47,9 @@ module.exports = {
     },
     async deletePost(_, { postId }, context) {
       const user = checkAuth(context)
-
       try {
         const post = await Post.findById(postId)
-        if (user.username === post.username) {
+        if (user.id === post.userId.toString()) {
           await post.delete()
           return 'Post deleted successfully'
         } else {
@@ -61,18 +60,19 @@ module.exports = {
       }
     },
     async likePost(_, { postId }, context) {
-      const { username } = checkAuth(context)
+      const { username, id } = checkAuth(context)
 
       const post = await Post.findById(postId)
       if (post) {
-        if (post.likes.find((like) => like.username === username)) {
+        if (post.likes.find((like) => like.userId === id)) {
           // Post already likes, unlike it
-          post.likes = post.likes.filter((like) => like.username !== username)
+          post.likes = post.likes.filter((like) => like.userId !== id)
         } else {
           // Not liked, like post
           post.likes.push({
             username,
             createdAt: new Date().toISOString(),
+            userId: id,
           })
         }
 

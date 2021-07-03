@@ -10,16 +10,7 @@ import DropDownMenu from '../components/DropDownMenu.js'
 import { useQuery } from '@apollo/react-hooks'
 import { GET_USER } from '../util/graphql'
 function PostCard({ post, userInfo }) {
-  const {
-    body,
-    createdAt,
-    id,
-    username,
-    userId,
-    likeCount,
-    commentCount,
-    likes,
-  } = post
+  const { body, createdAt, id, userId, likeCount, commentCount, likes } = post
   let postUser = {}
 
   const [open, setOpen] = useState(false)
@@ -53,7 +44,7 @@ function PostCard({ post, userInfo }) {
                   <div>
                     <span>{[postUser.username]}</span>
                     <span>{moment(createdAt).fromNow(true) + ' ago'}</span>
-                    {userInfo && userInfo.username === username ? (
+                    {userInfo && userInfo.id === userId ? (
                       <BsThreeDots onClick={() => setOpen(!open)}></BsThreeDots>
                     ) : null}
                   </div>

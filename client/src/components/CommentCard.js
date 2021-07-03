@@ -28,7 +28,7 @@ function CommentCard(props) {
             <Col xs={12}>
               <span>{comment.username}</span>
               <span>{moment(comment.createdAt).fromNow(true) + ' ago'}</span>
-              {user && user.username === comment.username ? (
+              {user && user.id === comment.userId ? (
                 <BsThreeDots
                   className='editModal'
                   onClick={() => setOpen(!open)}

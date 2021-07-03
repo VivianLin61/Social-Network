@@ -7,7 +7,7 @@ function LikeButton({ user, post: { userId, id, likeCount, likes } }) {
   const [liked, setLiked] = useState(false)
 
   useEffect(() => {
-    if (user && likes.find((like) => like.username === user.username)) {
+    if (user && likes.find((like) => like.userId === user.id)) {
       setLiked(true)
     } else setLiked(false)
   }, [user, likes])
@@ -15,6 +15,7 @@ function LikeButton({ user, post: { userId, id, likeCount, likes } }) {
   const [likePost] = useMutation(LIKE_POST_MUTATION, {
     variables: { postId: id },
     onCompleted: () => {
+      setLiked(!liked)
       if (!liked) {
         //Only create notification when user has liked and is not user own post
         if (userId !== user.id) {
@@ -71,6 +72,7 @@ const LIKE_POST_MUTATION = gql`
       likes {
         id
         username
+        userId
       }
       likeCount
     }

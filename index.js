@@ -23,6 +23,9 @@ app.use(graphqlUploadExpress({ maxFileSize: 100000000, maxFiles: 10 }))
 app.use(cors())
 server.applyMiddleware({ app })
 
+app.get('*', (req, res) => {
+  res.sendFile(path.resolve(__dirname, 'public', 'index.html'))
+})
 mongoose
   .connect(process.env.MONGO_URI, {
     useNewUrlParser: true,
@@ -30,7 +33,7 @@ mongoose
   })
   .then(() => {
     console.log('MongoDB Connected')
-    return app.listen({ port: PORT })
+    return app.listen({ port: process.env.PORT || 5000 })
   })
   .then((res) => {
     console.log(`Server running at ${PORT}`)

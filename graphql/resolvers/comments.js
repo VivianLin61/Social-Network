@@ -6,7 +6,7 @@ const User = require('../../models/User.js')
 module.exports = {
   Mutation: {
     createComment: async (_, { commenterId, postId, body }, context) => {
-      const { username } = checkAuth(context)
+      const { username, id } = checkAuth(context)
       if (body.trim() === '') {
         throw new UserInputError('Empty comment', {
           errors: {
@@ -24,21 +24,21 @@ module.exports = {
           username,
           createdAt: new Date().toISOString(),
           image: user.profileImage,
+          userId: id,
         })
         await post.save()
-        console.log(post)
         return post
       } else throw new UserInputError('Post not found')
     },
     async deleteComment(_, { postId, commentId }, context) {
-      const { username } = checkAuth(context)
+      const { username, id } = checkAuth(context)
 
       const post = await Post.findById(postId)
 
       if (post) {
         const commentIndex = post.comments.findIndex((c) => c.id === commentId)
 
-        if (post.comments[commentIndex].username === username) {
+        if (post.comments[commentIndex].userId === id) {
           post.comments.splice(commentIndex, 1)
           await post.save()
           return post

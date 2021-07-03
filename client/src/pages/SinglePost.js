@@ -161,6 +161,7 @@ const SUBMIT_COMMENT_MUTATION = gql`
         createdAt
         username
         image
+        userId
       }
       commentCount
     }
@@ -186,6 +187,7 @@ const FETCH_POST_QUERY = gql`
         createdAt
         body
         image
+        userId
       }
     }
   }

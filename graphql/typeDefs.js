@@ -31,11 +31,13 @@ module.exports = gql`
     username: String!
     body: String!
     image: String!
+    userId: String! # user that created the comment
   }
   type Like {
     id: ID!
     createdAt: String!
     username: String!
+    userId: String! # user that created the like
   }
   type User {
     id: ID!
