@@ -178,23 +178,17 @@ module.exports = {
       const updatedUser = await User.findOne({ _id: objectId })
       return updatedUser
     },
-    addProfileImage: async (parent, { file }, args) => {
-      const { _id } = args.req.body.variables
-      const objectId = new ObjectId(_id)
-      const { createReadStream, filename, mimetype } = await file
-      const location = path.join(
-        '/Users/vivian/Desktop/Social-Network',
-        `/public/images/${filename}`
-      )
+    addProfileImage: async (_, args) => {
+      const { _id, url } = args
 
-      const url = `http://localhost:5000/images/${filename}`,
-        myfile = createReadStream()
+      const objectId = new ObjectId(_id)
+
       const updated = await User.updateOne(
         { _id: objectId },
         { $set: { profileImage: url } }
       )
 
-      await myfile.pipe(fs.createWriteStream(location))
+      // await myfile.pipe(fs.createWriteStream(location))
       const updatedUser = await User.findOne({ _id: objectId })
       return updatedUser
     },

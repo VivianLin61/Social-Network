@@ -96,8 +96,9 @@ function Profile() {
     await uploadToS3(file, response.data.signS3.signedRequest)
 
     updateUserImage({
-      variables: { file, _id: user ? user.id : '' },
+      variables: { url: response.data.signS3.url, _id: user ? user.id : '' },
     })
+
     reader.readAsDataURL(e.target.files[0])
   }
   const handleUpdateUsername = (e) => {
@@ -159,8 +160,8 @@ function Profile() {
 }
 
 export const ADD_PROFILE_IMAGE = gql`
-  mutation AddProfileImage($_id: String!, $file: FileUpload!) {
-    addProfileImage(_id: $_id, file: $file) {
+  mutation AddProfileImage($_id: String!, $url: String!) {
+    addProfileImage(_id: $_id, url: $url) {
       username
       email
       profileImage
