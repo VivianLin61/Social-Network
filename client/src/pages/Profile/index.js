@@ -6,6 +6,8 @@ import { updateUser } from '../../actions'
 import { gql } from '@apollo/client'
 import { useForm } from '../../util/hooks'
 import { useDispatch, useSelector } from 'react-redux'
+import moment from 'moment'
+import axios from 'axios'
 function Profile() {
   const auth = useSelector((state) => state.auth.user)
   const [show, setShow] = useState(false)
@@ -55,7 +57,26 @@ function Profile() {
       changeUserInfo()
     }
   }
-  const imageHandler = (e) => {
+
+  const uploadToS3 = async (file, signedRequest) => {
+    const options = {
+      headers: {
+        'Content-Type': file.type,
+      },
+    }
+    await axios.put(signedRequest, file, options)
+  }
+
+  const [s3Sign] = useMutation(SIGN_S3_MUTATION)
+  const formatFilename = (filename) => {
+    const date = moment().format('YYYYMMDD')
+    const randomString = Math.random().toString(36).substring(2, 7)
+    const cleanFileName = filename.toLowerCase().replace(/[^a-z0-9]/g, '-')
+    const newFilename = `images/${date}-${randomString}-${cleanFileName}`
+    return newFilename.substring(0, 60)
+  }
+
+  const imageHandler = async (e) => {
     const file = e.target.files[0]
     const reader = new FileReader()
     reader.onload = () => {
@@ -64,6 +85,15 @@ function Profile() {
       }
     }
     if (!file) return
+
+    let response = await s3Sign({
+      variables: {
+        filename: formatFilename(file.name),
+        filetype: file.type,
+      },
+    })
+
+    await uploadToS3(file, response.data.signS3.signedRequest)
 
     updateUserImage({
       variables: { file, _id: user ? user.id : '' },
@@ -159,6 +189,14 @@ export const UPDATE_USER = gql`
       email
       profileImage
       id
+    }
+  }
+`
+export const SIGN_S3_MUTATION = gql`
+  mutation SignS3($filename: String!, $filetype: String!) {
+    signS3(filename: $filename, filetype: $filetype) {
+      signedRequest
+      url
     }
   }
 `

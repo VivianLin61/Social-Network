@@ -60,6 +60,11 @@ module.exports = gql`
     getNotifications(userId: String!): [PostNotification]
   }
 
+  type S3Payload {
+    signedRequest: String!
+    url: String!
+  }
+
   type Mutation {
     register(registerInput: RegisterInput): User!
     login(email: String!, password: String!): User!
@@ -76,7 +81,7 @@ module.exports = gql`
     createComment(commenterId: String!, postId: String!, body: String!): Post!
     deleteComment(postId: ID!, commentId: ID!): Post!
     likePost(postId: ID!): Post!
-    addProfileImage(_id: String!, file: FileUpload!): User!
+    addProfileImage(filename: String!, file: FileUpload!): User!
     createNotification(
       message: String!
       postId: String!
@@ -84,5 +89,6 @@ module.exports = gql`
     ): PostNotification!
     updateNotification(id: ID!): PostNotification!
     deleteNotification(id: ID!): String!
+    signS3(filename: String, filetype: String): S3Payload!
   }
 `

@@ -12,9 +12,9 @@ import rootReducer from './reducers'
 import thunk from 'redux-thunk'
 import { Provider } from 'react-redux'
 const uploadLink = createUploadLink({
-  // uri: 'http://localhost:5000/graphql',
+  uri: 'http://localhost:5000/graphql',
   // uri: 'graphql',
-  uri: 'https://social-network-backend-app.herokuapp.com/graphql',
+  // uri: 'https://social-network-backend-app.herokuapp.com/graphql',
 })
 
 const authLink = setContext(() => {

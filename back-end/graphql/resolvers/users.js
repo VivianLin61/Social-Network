@@ -1,5 +1,6 @@
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
+const aws = require('aws-sdk')
 const { UserInputError } = require('apollo-server')
 const ObjectId = require('mongoose').Types.ObjectId
 const {
@@ -10,6 +11,9 @@ const {
 const fs = require('fs')
 const path = require('path')
 const User = require('../../models/User')
+const env = require('dotenv')
+
+env.config()
 function generateToken(user) {
   return jwt.sign(
     {
@@ -178,15 +182,10 @@ module.exports = {
       const { _id } = args.req.body.variables
       const objectId = new ObjectId(_id)
       const { createReadStream, filename, mimetype } = await file
-      // const location = path.join(
-      //   '/Users/vivian/Desktop/Social-Network',
-      //   `/public/images/${filename}`
-      // )
-      let root = __dirname
-      root = root.split('/')
-      root.splice(root.length - 2, 2)
-      root = root.join('/')
-      const location = path.join(root, `/public/images/${filename}`)
+      const location = path.join(
+        '/Users/vivian/Desktop/Social-Network',
+        `/public/images/${filename}`
+      )
 
       const url = `http://localhost:5000/images/${filename}`,
         myfile = createReadStream()
@@ -198,6 +197,32 @@ module.exports = {
       await myfile.pipe(fs.createWriteStream(location))
       const updatedUser = await User.findOne({ _id: objectId })
       return updatedUser
+    },
+    async signS3(parent, { filename, filetype }) {
+      // AWS_ACCESS_KEY_ID
+      // AWS_SECRET_ACCESS_KEY
+      const s3 = new aws.S3({
+        signatureVersion: 'v4',
+        region: 'us-east-1',
+        accessKeyId: `${process.env.ACCESSS_KEY}`,
+        secretAccessKey: `${process.env.SECERET_ACCESSS_KEY}`,
+      })
+
+      const s3Params = {
+        Bucket: `${process.env.S3_BUCKET}`,
+        Key: filename,
+        Expires: 60,
+        ContentType: filetype,
+        ACL: 'public-read',
+      }
+
+      const signedRequest = await s3.getSignedUrl('putObject', s3Params)
+      const url = `https://${process.env.S3_BUCKET}.s3.amazonaws.com/${filename}`
+
+      return {
+        signedRequest,
+        url,
+      }
     },
   },
 }

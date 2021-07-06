@@ -77,3 +77,8 @@ export const DELETE_NOTIFICATION = gql`
     deleteNotification(id: $id)
   }
 `
+export const SIGN_S3_MUTATION = gql`
+  mutation SignS3($filename: String!, $filetype: String!) {
+    signS3(filename: $filename, filetype: $filetype)
+  }
+`
